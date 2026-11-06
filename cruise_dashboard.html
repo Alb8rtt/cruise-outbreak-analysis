@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Gets Sick on Cruise Ships</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --plane:#f9f9f7;
+  --ink-1:#0b0b0b; --ink-2:#52514e; --ink-3:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#7a776f;
+  --s1-soft:rgba(42,120,214,0.14); --s2-soft:rgba(235,104,52,0.14);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --surface-1:#1a1a19; --plane:#0d0d0d;
+    --ink-1:#f0efec; --ink-2:#c3c2b7; --ink-3:#898781;
+    --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#908d85;
+    --s1-soft:rgba(57,135,229,0.18); --s2-soft:rgba(217,89,38,0.18);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --plane:#0d0d0d;
+  --ink-1:#f0efec; --ink-2:#c3c2b7; --ink-3:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#908d85;
+  --s1-soft:rgba(57,135,229,0.18); --s2-soft:rgba(217,89,38,0.18);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--plane); color:var(--ink-1);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 72px}
+header{padding:56px 0 8px}
+.kicker{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:0 0 14px}
+h1{font-size:clamp(28px,5.2vw,46px);line-height:1.1;margin:0 0 16px;letter-spacing:-0.02em;font-weight:700}
+h1 em{font-style:normal;color:var(--s2)}
+.standfirst{font-size:clamp(16px,2.2vw,18px);color:var(--ink-2);margin:0;max-width:62ch}
+.byline{margin-top:20px;font-size:13px;color:var(--ink-3)}
+.byline a{color:var(--ink-2)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--ring);border:1px solid var(--ring);border-radius:12px;overflow:hidden;margin:40px 0 8px}
+.stat{background:var(--surface-1);padding:20px 18px}
+.stat .v{font-size:clamp(24px,3.6vw,34px);font-weight:700;letter-spacing:-0.02em;line-height:1.1}
+.stat .v.b{color:var(--s1)} .stat .v.o{color:var(--s2)}
+.stat .l{font-size:12px;color:var(--ink-3);margin-top:6px;line-height:1.35}
+
+section{margin:56px 0 0}
+h2{font-size:clamp(19px,2.8vw,24px);margin:0 0 8px;letter-spacing:-0.01em;font-weight:650}
+.sub{color:var(--ink-2);margin:0 0 22px;max-width:68ch;font-size:15px}
+.card{background:var(--surface-1);border:1px solid var(--ring);border-radius:12px;padding:22px 20px 16px}
+.chart{width:100%;overflow:visible;display:block}
+.note{font-size:13px;color:var(--ink-3);margin:14px 2px 0;max-width:72ch}
+
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin:0 0 16px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:11px;height:11px;border-radius:3px;flex:none}
+
+.grid-line{stroke:var(--grid);stroke-width:1}
+.axis-line{stroke:var(--axis);stroke-width:1}
+.tick{fill:var(--ink-3);font-size:11.5px;font-variant-numeric:tabular-nums}
+.alab{fill:var(--ink-3);font-size:11.5px}
+.dlab{font-size:12.5px;font-weight:650}
+
+.tt{position:fixed;pointer-events:none;opacity:0;transition:opacity .09s;z-index:50;
+  background:var(--surface-1);border:1px solid var(--ring);border-radius:9px;
+  padding:9px 11px;font-size:12.5px;color:var(--ink-1);
+  box-shadow:0 6px 22px rgba(0,0,0,.14);max-width:230px;line-height:1.45}
+.tt b{font-weight:650}
+.tt .r{display:flex;justify-content:space-between;gap:14px;font-variant-numeric:tabular-nums}
+.tt .r i{font-style:normal;color:var(--ink-3)}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+button.t{font:inherit;font-size:13px;padding:7px 13px;border-radius:999px;cursor:pointer;
+  background:var(--surface-1);color:var(--ink-2);border:1px solid var(--ring)}
+button.t[aria-pressed="true"]{background:var(--ink-1);color:var(--surface-1);border-color:var(--ink-1)}
+#tables,.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:340px;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.hidden{display:none}
+
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:24px}
+.f{background:var(--surface-1);border:1px solid var(--ring);border-radius:12px;padding:20px}
+.f h3{margin:0 0 8px;font-size:15px;font-weight:650}
+.f p{margin:0;font-size:14px;color:var(--ink-2)}
+.f .n{font-size:13px;color:var(--ink-3);margin-top:10px}
+
+footer{margin-top:64px;padding-top:28px;border-top:1px solid var(--grid);font-size:13px;color:var(--ink-3)}
+footer h3{font-size:13px;color:var(--ink-2);margin:0 0 10px;font-weight:650}
+footer ul{margin:0 0 22px;padding-left:18px} footer li{margin-bottom:7px;max-width:76ch}
+footer a{color:var(--ink-2)}
+@media (max-width:600px){
+  header{padding-top:36px} section{margin-top:40px} .card{padding:16px 12px 12px}
+  th,td{padding:7px 8px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="tt" id="tt"></div>
+<div class="wrap">
+
+<header>
+  <p class="kicker">CDC Vessel Sanitation Program · 1993&ndash;2026</p>
+  <h1>Cruise passengers fall ill at <em>3.8 times</em> the crew rate on the same ship</h1>
+  <p class="standfirst">Crew live aboard for months. Passengers are there for a week. They drink the
+  same water, eat from the same galley and touch the same handrails. One group gets sick far more
+  often, and the gap holds in every subgroup this dataset is large enough to test.</p>
+  <p class="byline">Analysis by Albert Rafael Alonso &middot; 425 investigations,
+  <span id="n-ships">&mdash;</span> vessels
+  &middot; Source: <a href="https://www.cdc.gov/vessel-sanitation/cruise-ship-outbreaks/earlier-outbreaks.html">CDC Vessel Sanitation Program</a></p>
+</header>
+
+<div class="stats" id="stats"></div>
+<p class="note" id="statnote"></p>
+
+<section>
+  <h2>The gap survives every cut tested here</h2>
+  <p class="sub">Pooled attack rate for passengers and crew, inside each subgroup the data supports.
+  Every occupancy band, every era that has paired counts, both seasons. The ratio ranges from
+  2.7x to 4.6x and never approaches parity. Cruise line is not among the cuts: most operators
+  appear only a handful of times and 10 appear exactly once. Operator was not tested at all,
+  so this is a claim about the cuts below, not about every cut available.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i class="sw" style="background:var(--s2)"></i>Passengers</span>
+      <span><i class="sw" style="background:var(--s1)"></i>Crew</span>
+    </div>
+    <svg class="chart" id="c-sub" viewBox="0 0 760 430" role="img"
+      aria-label="Dumbbell chart showing passenger and crew attack rates within each occupancy band, era and season. Passengers are higher in all eleven subgroups."></svg>
+  </div>
+  <p class="note">Paired on the voyage, so ship, route, water supply and galley are held constant.
+  Wilcoxon signed-rank p = 1.2 &times; 10<sup>&minus;47</sup>, rank-biserial r = 0.96, median
+  per-voyage difference 4.11 percentage points. This is the finding the project rests on.</p>
+</section>
+
+<section>
+  <h2>Persistent across eras, but no significant trend either way</h2>
+  <p class="sub">Pooled rate per era. The crew rate fell to a low in 2016&ndash;2020 and rebounded.
+  Neither series shows a statistically detectable trend in either direction.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i class="sw" style="background:var(--s2)"></i>Passengers</span>
+      <span><i class="sw" style="background:var(--s1)"></i>Crew</span>
+    </div>
+    <svg class="chart" id="c-era" viewBox="0 0 760 360" role="img"
+      aria-label="Line chart of passenger and crew attack rates by era, showing a persistent gap and no clear trend in either series."></svg>
+  </div>
+  <p class="note"><b>Neither trend is statistically significant</b> across individual voyages:
+  crew &rho; = &minus;0.097, p = 0.092; passengers &rho; = +0.011, p = 0.850. An earlier version of
+  this analysis reported the crew trend as significant. That figure came from a sample cut at 2020,
+  which excluded the post-2020 rebound, and the cut was what produced the significance. It has been
+  withdrawn and replaced with the full-sample figures above.</p>
+</section>
+
+<section>
+  <h2>Most "repeat outbreaks" are one episode counted twice</h2>
+  <p class="sub">47 outbreaks began within thirty days of a previous one on the same vessel. 38 of
+  them began within two days of the previous voyage ending and one more overlapped it outright, with
+  a median gap of zero days. The most economical reading is that these are the following sailing of
+  the same itinerary, though the dataset carries no itinerary field to confirm it.</p>
+  <div class="card">
+    <svg class="chart" id="c-consec" viewBox="0 0 760 180" role="img"
+      aria-label="Bar showing that 38 of 47 sub-30-day repeat outbreaks begin within two days of the prior voyage ending, one overlaps the prior investigation, and 8 are separate episodes."></svg>
+  </div>
+  <p class="note">The economical explanation is a single outbreak spanning a turnaround, logged as
+  two investigations. That matters for anyone using VSP records to count outbreak frequency, because
+  the counts overstate the number of distinct episodes. I originally read this as evidence that ships
+  return to service too early. That conclusion is withdrawn.</p>
+</section>
+
+<section>
+  <h2>Clustering is real, but smaller than the obvious test suggests</h2>
+  <p class="sub">How many repeats you would expect if outbreaks landed on ships at random depends
+  entirely on what you let "at random" mean. Shuffling ship names across the whole 1993&ndash;2026
+  range lets a 1997 vessel take a 2020 date.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i class="sw" style="background:var(--s2)"></i>Observed</span>
+      <span><i class="sw" style="background:var(--s1)"></i>Expected, shuffled within calendar year</span>
+    </div>
+    <svg class="chart" id="c-clus" viewBox="0 0 760 300" role="img"
+      aria-label="Grouped bar chart comparing observed repeat outbreaks against the number expected under a within-year permutation null."></svg>
+  </div>
+  <div id="clus-table" class="tablewrap"></div>
+  <p class="note">All three nulls stay significant at p &lt; 0.0005 across 2,000 permutations, but the
+  effect size shrinks as the null gets fairer. At the 90-day window it falls from 3.4x under an
+  unrestricted shuffle to 1.4x when the shuffle is restricted to within a calendar year. The chart
+  shows that most conservative comparison. The 90-day figures are the ones to quote, because the
+  independence assumption the test needs is weakest at 30 days, where most repeats are consecutive
+  sailings of the same loop.</p>
+</section>
+
+<section>
+  <h2>More passengers aboard does not mean a worse outbreak</h2>
+  <p class="sub">Every outbreak with published counts, by how many passengers were aboard. The
+  intuitive theory is that crowded megaships breed worse outbreaks. It is not supported.</p>
+  <div class="card">
+    <svg class="chart" id="c-scatter" viewBox="0 0 760 380" role="img"
+      aria-label="Scatter plot of passengers aboard each voyage against the passenger attack rate, showing no detectable relationship."></svg>
+  </div>
+  <p class="note">Spearman &rho; = &minus;0.061, p = 0.292 across 303 outbreaks. The least-squares
+  line slopes gently downward, but that slope is carried by a handful of very small expedition ships
+  with extreme rates and it does not survive a rank test. Voyage length does not predict severity
+  either (&rho; = +0.020, p = 0.726). Both null results are published rather than dropped.</p>
+</section>
+
+<section>
+  <h2>When outbreaks happen</h2>
+  <p class="sub">Investigated outbreaks by the month the voyage began, with the attack rate computed
+  separately over the smaller set of voyages that carry published counts.</p>
+  <div class="card">
+    <div class="toolbar">
+      <button class="t" id="m-count" aria-pressed="true">Outbreaks (all 425)</button>
+      <button class="t" id="m-rate" aria-pressed="false">Attack rate (303 with counts)</button>
+    </div>
+    <svg class="chart" id="c-month" viewBox="0 0 760 320" role="img"
+      aria-label="Bar chart of outbreaks by month of voyage start, concentrated December through March."></svg>
+  </div>
+  <p class="note">The two views use different populations, which is why they are on separate toggles
+  rather than the same axis. Outbreaks concentrate in winter, but so does Caribbean sailing volume
+  and occupancy, and this dataset has no voyage counts by month. The seasonal pattern cannot be
+  separated from seasonal exposure, so no inference is drawn from it here.</p>
+</section>
+
+<section>
+  <h2>What this does and does not establish</h2>
+  <div class="findings">
+    <div class="f">
+      <h3>Established</h3>
+      <p>Passengers fall ill at roughly four times the crew rate on the same voyages, in every
+      subgroup large enough to test, with a very large effect size. That is the one result here
+      that survives the paired signed-rank test and all eleven subgroup cuts.</p>
+    </div>
+    <div class="f">
+      <h3>Not established</h3>
+      <p>Any trend over time, in either direction. Across individual voyages the passenger rate
+      gives &rho; = +0.011, p = 0.850, which is not evidence of stability but an absence of
+      evidence either way. Also not established: why the gap exists. This dataset carries no
+      protocol, immunity or demographic variable. Protocol
+      differences, acquired immunity from months of exposure, a younger crew population, and crew
+      under-reporting are all live explanations, and nothing here ranks them.</p>
+    </div>
+    <div class="f">
+      <h3>Withdrawn</h3>
+      <p>That crew outcomes improved while passenger outcomes did not, which rested on a truncated
+      sample. And that vessels return to service too early, which rested on repeat outbreaks that
+      turn out to be consecutive sailings.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The data</h2>
+  <div class="card">
+    <div class="toolbar">
+      <button class="t" id="t-sub" aria-pressed="true">By subgroup</button>
+      <button class="t" id="t-era" aria-pressed="false">By era</button>
+      <button class="t" id="t-month" aria-pressed="false">By month</button>
+      <button class="t" id="t-clus" aria-pressed="false">Repeat outbreaks</button>
+    </div>
+    <div id="tables" class="tablewrap"></div>
+  </div>
+</section>
+
+<footer>
+  <h3>Method and limitations</h3>
+  <ul>
+    <li><b>428 investigations were transcribed; 425 are analysed.</b> Three carry month-only sailing
+      dates in the CDC source and cannot be placed on a timeline. Nothing was estimated or imputed.</li>
+    <li><b>Rates come from the 303 records carrying both passenger and crew counts</b>, spanning 2004
+      to 2024. CDC publishes counts only for closed reporting years. The longer 1993&ndash;2026 span
+      applies to outbreak frequency only.</li>
+    <li><b>Crew under-reporting is one of four live explanations</b> for the gap, alongside protocol,
+      acquired immunity and age mix. Crew have a financial incentive not to report illness that takes
+      them off paid duty. This data cannot separate them.</li>
+    <li>CDC investigates once reported illness reaches 3% of passengers or crew, so every rate here is
+      conditional on an outbreak being investigated. This is not a rate across all cruises.</li>
+    <li>Outbreak counts by cruise line track fleet size and voyage volume. They are not a safety
+      ranking.</li>
+    <li>Thirteen records carry a CDC percentage that disagrees with CDC's own published counts, seven on the passenger figure and six on the crew figure, and four
+      carry unusable voyage lengths. All are flagged in the dataset rather than silently corrected.</li>
+    <li>Records for 2019&ndash;2022 came from a public mirror of the CDC page because the CDC archive
+      URL was unreachable at collection time. All source pages were read by model-mediated text
+      extraction rather than direct HTML parsing.</li>
+  </ul>
+  <h3>Source</h3>
+  <p><a href="https://www.cdc.gov/vessel-sanitation/cruise-ship-outbreaks/earlier-outbreaks.html">CDC
+  Vessel Sanitation Program outbreak investigations</a>. VSP has jurisdiction over every cruise ship
+  carrying 13 or more passengers that calls on a US port.</p>
+</footer>
+</div>
+
+<script>
+const DATA = {"dataset":{"transcribed":428,"dropped_no_date":3,"analysis_set":425,"paired":303,"unpaired":122,"ships":158,"lines":40,"first_voyage":"1993-12-26","last_voyage":"2026-07-15","paired_year_min":2004,"paired_year_max":2024},"finding1":{"pax_rate":6.34,"crew_rate":1.66,"ratio":3.83,"pax_ill":35673,"pax_total":563103,"crew_ill":4107,"crew_total":248020,"n_higher":289,"n_lower":14,"n":303,"wilcoxon_p":1.1769990609722491e-47,"rank_biserial":0.96,"median_diff_pp":4.11},"subgroups":[{"by":"ship_size_band","group":"1. Under 1,000","n":43,"pax":7.51,"crew":2.05,"ratio":3.67},{"by":"ship_size_band","group":"2. 1,000-1,999","n":132,"pax":6.85,"crew":1.72,"ratio":3.99},{"by":"ship_size_band","group":"3. 2,000-2,999","n":92,"pax":5.8,"crew":1.54,"ratio":3.78},{"by":"ship_size_band","group":"4. 3,000+","n":36,"pax":6.18,"crew":1.63,"ratio":3.8},{"by":"era","group":"2001-2005","n":54,"pax":5.9,"crew":2.16,"ratio":2.73},{"by":"era","group":"2006-2010","n":103,"pax":7.04,"crew":1.74,"ratio":4.05},{"by":"era","group":"2011-2015","n":60,"pax":6.49,"crew":1.43,"ratio":4.53},{"by":"era","group":"2016-2020","n":49,"pax":5.79,"crew":1.27,"ratio":4.56},{"by":"era","group":"2021-2026","n":37,"pax":5.43,"crew":1.71,"ratio":3.18},{"by":"season","group":"Apr-Nov","n":140,"pax":5.82,"crew":1.43,"ratio":4.06},{"by":"season","group":"Dec-Mar (norovirus season)","n":163,"pax":6.78,"crew":1.84,"ratio":3.68}],"eras":[{"era":"2001-2005","n":54,"years":"2004-2005","pax":5.9,"crew":2.16,"ratio":2.73},{"era":"2006-2010","n":103,"years":"2006-2010","pax":7.04,"crew":1.74,"ratio":4.05},{"era":"2011-2015","n":60,"years":"2011-2015","pax":6.49,"crew":1.43,"ratio":4.53},{"era":"2016-2020","n":49,"years":"2016-2020","pax":5.79,"crew":1.27,"ratio":4.56},{"era":"2021-2026","n":37,"years":"2021-2024","pax":5.43,"crew":1.71,"ratio":3.18}],"finding2":{"crew_first":2.16,"crew_last":1.71,"crew_trough":1.27,"crew_trough_era":"2016-2020","crew_change_full_pct":-21,"crew_change_to_trough_pct":-41,"pax_first":5.9,"pax_last":5.43,"pax_change_full_pct":-8,"crew_rho":-0.097,"crew_p":0.092,"pax_rho":0.011,"pax_p":0.85},"finding3":{"repeats_30d":47,"consecutive_sailings":38,"overlapping_30d":1,"median_days_after_prior_end":0.0,"non_consecutive_30d":8},"clustering":[{"window":30,"observed":47,"unrestricted":{"expected":7.8,"sd":2.7,"p":"<0.0005","times":6.0},"within 3-year block":{"expected":17.2,"sd":3.5,"p":"<0.0005","times":2.7},"within year":{"expected":24.1,"sd":3.7,"p":"<0.0005","times":2.0}},{"window":60,"observed":63,"unrestricted":{"expected":14.5,"sd":3.6,"p":"<0.0005","times":4.3},"within 3-year block":{"expected":30.1,"sd":4.4,"p":"<0.0005","times":2.1},"within year":{"expected":39.7,"sd":4.2,"p":"<0.0005","times":1.6}},{"window":90,"observed":70,"unrestricted":{"expected":20.6,"sd":4.2,"p":"<0.0005","times":3.4},"within 3-year block":{"expected":40.8,"sd":4.8,"p":"<0.0005","times":1.7},"within year":{"expected":51.5,"sd":4.4,"p":"<0.0005","times":1.4}}],"finding4":{"size_rho":-0.061,"size_p":0.292,"len_rho":0.02,"len_p":0.726,"len_n":302,"len_excluded":1},"quality":{"cdc_pax_pct_disagreements":7,"cdc_crew_pct_disagreements":6,"cdc_pct_disagreements_total":13,"voyage_days_source_errors":2,"outside_voyage_day_window":4,"overlapping_records":1,"unpaired_1993_2003":88,"unpaired_2004_on":34,"paired_distinct_ships":120,"operators_with_one_paired_record":10},"months":[{"month":"Jan","n_all":69,"n_paired":45,"pax":7.89},{"month":"Feb","n_all":55,"n_paired":45,"pax":7.1},{"month":"Mar","n_all":58,"n_paired":43,"pax":6.21},{"month":"Apr","n_all":46,"n_paired":35,"pax":5.3},{"month":"May","n_all":28,"n_paired":22,"pax":5.54},{"month":"Jun","n_all":18,"n_paired":9,"pax":5.89},{"month":"Jul","n_all":18,"n_paired":10,"pax":5.81},{"month":"Aug","n_all":10,"n_paired":5,"pax":5.9},{"month":"Sep","n_all":21,"n_paired":16,"pax":6.23},{"month":"Oct","n_all":29,"n_paired":19,"pax":5.29},{"month":"Nov","n_all":33,"n_paired":24,"pax":7.0},{"month":"Dec","n_all":40,"n_paired":30,"pax":5.31}],"scatter":[{"x":1563,"y":1.86,"s":"Queen Elizabeth 2","yr":2004},{"x":2095,"y":6.35,"s":"Coral Princess","yr":2004},{"x":68,"y":0.0,"s":"The World","yr":2004},{"x":1260,"y":5.79,"s":"Ryndam","yr":2004},{"x":1576,"y":18.85,"s":"Carnival Celebration","yr":2004},{"x":2187,"y":3.57,"s":"Brilliance of the Seas","yr":2004},{"x":1521,"y":5.39,"s":"Queen Elizabeth 2","yr":2004},{"x":1793,"y":3.63,"s":"Oriana","yr":2004},{"x":2241,"y":1.47,"s":"Queen Mary 2","yr":2004},{"x":984,"y":7.83,"s":"Norwegian Crown","yr":2004},{"x":1129,"y":4.07,"s":"Royal Princess","yr":2004},{"x":1018,"y":4.42,"s":"Norwegian Crown","yr":2004},{"x":1250,"y":3.92,"s":"Horizon","yr":2004},{"x":1338,"y":4.41,"s":"Zenith","yr":2004},{"x":1130,"y":6.64,"s":"Amsterdam","yr":2004},{"x":1262,"y":3.01,"s":"Rotterdam","yr":2004},{"x":1681,"y":3.21,"s":"Norwegian Wind","yr":2004},{"x":1238,"y":7.35,"s":"Veendam","yr":2004},{"x":1109,"y":3.88,"s":"Norwegian Crown","yr":2004},{"x":1070,"y":3.64,"s":"Norwegian Crown","yr":2004},{"x":2018,"y":18.58,"s":"Island Princess","yr":2004},{"x":2036,"y":3.24,"s":"Island Princess","yr":2004},{"x":2273,"y":3.12,"s":"Serenade of the Seas","yr":2004},{"x":758,"y":9.37,"s":"M/V Explorer","yr":2004},{"x":618,"y":9.22,"s":"Pacific Princess","yr":2004},{"x":371,"y":3.5,"s":"Silver Shadow","yr":2004},{"x":1998,"y":7.26,"s":"Sun Princess","yr":2004},{"x":1537,"y":3.06,"s":"Regal Princess","yr":2004},{"x":2031,"y":4.97,"s":"Sun Princess","yr":2004},{"x":1230,"y":3.17,"s":"Veendam","yr":2004},{"x":275,"y":4.0,"s":"Silver Shadow","yr":2004},{"x":1749,"y":4.17,"s":"Norwegian Dream","yr":2004},{"x":2742,"y":3.06,"s":"Golden Princess","yr":2004},{"x":2116,"y":3.97,"s":"Coral Princess","yr":2004},{"x":2136,"y":4.82,"s":"Enchantment of the Seas","yr":2005},{"x":1236,"y":5.66,"s":"Veendam","yr":2005},{"x":2035,"y":4.57,"s":"Sun Princess","yr":2005},{"x":1223,"y":22.24,"s":"Ryndam","yr":2005},{"x":1229,"y":17.82,"s":"Veendam","yr":2005},{"x":3465,"y":7.97,"s":"Mariner of the Seas","yr":2005},{"x":1544,"y":4.66,"s":"Empress of the Seas","yr":2005},{"x":551,"y":0.18,"s":"Seven Seas Mariner","yr":2005},{"x":1692,"y":5.26,"s":"Carnival Celebration","yr":2005},{"x":1647,"y":4.19,"s":"Carnival Celebration","yr":2005},{"x":1308,"y":10.55,"s":"Zenith","yr":2005},{"x":1267,"y":6.95,"s":"Veendam","yr":2005},{"x":1163,"y":3.27,"s":"Royal Princess","yr":2005},{"x":1014,"y":5.92,"s":"Norwegian Crown","yr":2005},{"x":570,"y":3.51,"s":"Crystal Symphony","yr":2005},{"x":1309,"y":3.21,"s":"Horizon","yr":2005},{"x":1974,"y":3.85,"s":"Dawn Princess","yr":2005},{"x":2000,"y":6.05,"s":"Sun Princess","yr":2005},{"x":1592,"y":8.48,"s":"Splendour of the Seas","yr":2005},{"x":1888,"y":5.56,"s":"Zuiderdam","yr":2005},{"x":562,"y":4.09,"s":"Minerva II","yr":2006},{"x":2498,"y":3.44,"s":"Queen Mary 2","yr":2006},{"x":3245,"y":7.49,"s":"Explorer of the Seas","yr":2006},{"x":582,"y":4.47,"s":"Seven Seas Mariner","yr":2006},{"x":1412,"y":3.61,"s":"Volendam","yr":2006},{"x":2263,"y":5.74,"s":"Grandeur of the Seas","yr":2006},{"x":1902,"y":10.04,"s":"Celebrity Mercury","yr":2006},{"x":1950,"y":3.69,"s":"Island Princess","yr":2006},{"x":1360,"y":9.56,"s":"Amsterdam","yr":2006},{"x":1986,"y":5.39,"s":"Celebrity Mercury","yr":2006},{"x":1294,"y":5.87,"s":"Amsterdam","yr":2006},{"x":1214,"y":5.52,"s":"Veendam","yr":2006},{"x":3292,"y":3.55,"s":"Explorer of the Seas","yr":2006},{"x":2107,"y":3.37,"s":"Norwegian Sun","yr":2006},{"x":2388,"y":4.82,"s":"Norwegian Star","yr":2006},{"x":1270,"y":8.03,"s":"Ryndam","yr":2006},{"x":1230,"y":5.2,"s":"Ryndam","yr":2006},{"x":2025,"y":5.98,"s":"Celebrity Mercury","yr":2006},{"x":2282,"y":4.6,"s":"Celebrity Infinity","yr":2006},{"x":3671,"y":6.76,"s":"Mariner of the Seas","yr":2006},{"x":2131,"y":10.65,"s":"Radiance of the Seas","yr":2006},{"x":2643,"y":4.81,"s":"Diamond Princess","yr":2006},{"x":1955,"y":3.32,"s":"Celebrity Constellation","yr":2006},{"x":1959,"y":5.56,"s":"Island Princess","yr":2006},{"x":1776,"y":4.05,"s":"Celebrity Constellation","yr":2006},{"x":2023,"y":3.36,"s":"Serenade of the Seas","yr":2006},{"x":2804,"y":19.12,"s":"Carnival Liberty","yr":2006},{"x":3260,"y":3.96,"s":"Adventure of the Seas","yr":2006},{"x":1911,"y":3.77,"s":"Celebrity Summit","yr":2006},{"x":2241,"y":4.51,"s":"Serenade of the Seas","yr":2006},{"x":3823,"y":8.84,"s":"Freedom of the Seas","yr":2006},{"x":1431,"y":4.47,"s":"Zaandam","yr":2006},{"x":1671,"y":4.61,"s":"Norwegian Wind","yr":2006},{"x":2013,"y":5.56,"s":"Sun Princess","yr":2006},{"x":3907,"y":2.18,"s":"Freedom of the Seas","yr":2006},{"x":1479,"y":5.07,"s":"Regal Princess","yr":2006},{"x":1652,"y":16.71,"s":"Queen Elizabeth 2","yr":2007},{"x":1153,"y":9.54,"s":"Ryndam","yr":2007},{"x":1385,"y":7.58,"s":"Volendam","yr":2007},{"x":1936,"y":9.25,"s":"Island Princess","yr":2007},{"x":36,"y":22.22,"s":"Spirit of Nantucket","yr":2007},{"x":1790,"y":8.16,"s":"Westerdam","yr":2007},{"x":1260,"y":14.6,"s":"Ryndam","yr":2007},{"x":614,"y":6.19,"s":"Seven Seas Mariner","yr":2007},{"x":1209,"y":5.05,"s":"Ryndam","yr":2007},{"x":1504,"y":4.59,"s":"Regal Princess","yr":2007},{"x":169,"y":15.38,"s":"Empress of the North","yr":2007},{"x":1363,"y":6.53,"s":"Zenith","yr":2007},{"x":456,"y":4.82,"s":"Seven Seas Navigator","yr":2007},{"x":1427,"y":4.84,"s":"Volendam","yr":2007},{"x":2490,"y":3.69,"s":"Norwegian Pearl","yr":2007},{"x":2331,"y":7.59,"s":"Norwegian Star","yr":2007},{"x":3846,"y":5.2,"s":"Liberty of the Seas","yr":2007},{"x":2205,"y":5.26,"s":"Carnival Spirit","yr":2007},{"x":1246,"y":4.09,"s":"Norwegian Crown","yr":2007},{"x":2169,"y":6.87,"s":"Norwegian Dawn","yr":2007},{"x":1371,"y":6.64,"s":"Zaandam","yr":2007},{"x":2377,"y":14.09,"s":"Norwegian Pearl","yr":2007},{"x":642,"y":7.79,"s":"Pacific Princess","yr":2007},{"x":3209,"y":4.86,"s":"Emerald Princess","yr":2007},{"x":1451,"y":5.86,"s":"Volendam","yr":2008},{"x":1980,"y":5.2,"s":"Noordam","yr":2008},{"x":2427,"y":9.39,"s":"Norwegian Star","yr":2008},{"x":1548,"y":7.82,"s":"Carnival Holiday","yr":2008},{"x":1226,"y":9.22,"s":"Ryndam","yr":2008},{"x":1428,"y":7.0,"s":"Zaandam","yr":2008},{"x":1579,"y":6.27,"s":"Norwegian Dream","yr":2008},{"x":1313,"y":8.53,"s":"Veendam","yr":2008},{"x":620,"y":5.32,"s":"Seven Seas Mariner","yr":2008},{"x":2132,"y":6.75,"s":"Norwegian Jewel","yr":2008},{"x":68,"y":42.65,"s":"Grande Caribe","yr":2008},{"x":2098,"y":4.1,"s":"Norwegian Jewel","yr":2008},{"x":3081,"y":5.58,"s":"Caribbean Princess","yr":2008},{"x":1820,"y":14.4,"s":"Zuiderdam","yr":2008},{"x":1402,"y":5.63,"s":"Maasdam","yr":2009},{"x":1842,"y":8.14,"s":"Celebrity Mercury","yr":2009},{"x":1996,"y":12.63,"s":"Coral Princess","yr":2009},{"x":1408,"y":5.26,"s":"Zaandam","yr":2009},{"x":1840,"y":5.98,"s":"Oosterdam","yr":2009},{"x":1862,"y":6.07,"s":"Celebrity Mercury","yr":2009},{"x":1318,"y":10.24,"s":"Amsterdam","yr":2009},{"x":3253,"y":6.39,"s":"Carnival Liberty","yr":2009},{"x":1954,"y":5.12,"s":"Island Princess","yr":2009},{"x":2001,"y":6.05,"s":"Coral Princess","yr":2009},{"x":1546,"y":6.53,"s":"Amsterdam","yr":2009},{"x":1826,"y":8.71,"s":"Noordam","yr":2009},{"x":1991,"y":3.67,"s":"Norwegian Spirit","yr":2009},{"x":621,"y":4.51,"s":"Seven Seas Mariner","yr":2009},{"x":1317,"y":4.25,"s":"Amsterdam","yr":2009},{"x":1874,"y":9.55,"s":"Queen Victoria","yr":2010},{"x":1163,"y":25.19,"s":"Balmoral","yr":2010},{"x":1854,"y":9.06,"s":"Queen Victoria","yr":2010},{"x":1833,"y":22.42,"s":"Celebrity Mercury","yr":2010},{"x":1211,"y":13.87,"s":"Maasdam","yr":2010},{"x":2158,"y":4.73,"s":"Jewel of the Seas","yr":2010},{"x":2020,"y":7.77,"s":"Celebrity Millennium","yr":2010},{"x":1749,"y":10.41,"s":"Celebrity Mercury","yr":2010},{"x":1829,"y":22.2,"s":"Celebrity Mercury","yr":2010},{"x":1846,"y":3.95,"s":"Zuiderdam","yr":2010},{"x":3003,"y":3.76,"s":"Carnival Glory","yr":2010},{"x":2027,"y":6.61,"s":"Nieuw Amsterdam","yr":2010},{"x":814,"y":4.55,"s":"Crystal Symphony","yr":2010},{"x":2483,"y":7.45,"s":"Queen Mary 2","yr":2010},{"x":2336,"y":6.42,"s":"Radiance of the Seas","yr":2011},{"x":2839,"y":4.16,"s":"Celebrity Solstice","yr":2011},{"x":1126,"y":3.46,"s":"Oceania Marina","yr":2011},{"x":1507,"y":4.38,"s":"Coral Princess","yr":2011},{"x":1990,"y":3.22,"s":"Coral Princess","yr":2011},{"x":2058,"y":5.05,"s":"Celebrity Millennium","yr":2011},{"x":2053,"y":6.23,"s":"Sea Princess","yr":2011},{"x":61,"y":27.87,"s":"National Geographic Sea Lion","yr":2011},{"x":2128,"y":0.66,"s":"Sea Princess","yr":2011},{"x":1188,"y":12.46,"s":"Ryndam","yr":2011},{"x":2730,"y":4.69,"s":"Celebrity Solstice","yr":2011},{"x":1298,"y":5.32,"s":"Ryndam","yr":2011},{"x":2409,"y":3.9,"s":"Norwegian Spirit","yr":2011},{"x":1255,"y":4.46,"s":"Maasdam","yr":2011},{"x":1727,"y":8.4,"s":"Aurora","yr":2012},{"x":3310,"y":7.49,"s":"Voyager of the Seas","yr":2012},{"x":3103,"y":11.73,"s":"Crown Princess","yr":2012},{"x":1992,"y":5.12,"s":"Celebrity Constellation","yr":2012},{"x":2809,"y":6.34,"s":"Celebrity Silhouette","yr":2012},{"x":3078,"y":9.36,"s":"Crown Princess","yr":2012},{"x":3147,"y":4.1,"s":"Ruby Princess","yr":2012},{"x":1918,"y":10.48,"s":"Sun Princess","yr":2012},{"x":3652,"y":5.61,"s":"Carnival Glory","yr":2012},{"x":1778,"y":6.41,"s":"Dawn Princess","yr":2012},{"x":2129,"y":7.19,"s":"Rhapsody of the Seas","yr":2012},{"x":2971,"y":5.02,"s":"Ruby Princess","yr":2012},{"x":791,"y":10.75,"s":"Amsterdam","yr":2012},{"x":1019,"y":3.63,"s":"Oceania Riviera","yr":2012},{"x":3235,"y":5.84,"s":"Emerald Princess","yr":2012},{"x":2613,"y":7.81,"s":"Queen Mary 2","yr":2012},{"x":1991,"y":5.93,"s":"Vision of the Seas","yr":2013},{"x":3129,"y":8.5,"s":"Ruby Princess","yr":2013},{"x":2086,"y":4.84,"s":"Celebrity Infinity","yr":2013},{"x":2849,"y":6.42,"s":"Celebrity Solstice","yr":2013},{"x":1237,"y":4.85,"s":"Veendam","yr":2013},{"x":1963,"y":1.17,"s":"Celebrity Millennium","yr":2013},{"x":816,"y":15.32,"s":"Crystal Symphony","yr":2013},{"x":2112,"y":15.25,"s":"Celebrity Summit","yr":2013},{"x":2600,"y":4.27,"s":"Norwegian Gem","yr":2013},{"x":2318,"y":5.61,"s":"Norwegian Star","yr":2014},{"x":3071,"y":20.64,"s":"Explorer of the Seas","yr":2014},{"x":3102,"y":5.83,"s":"Caribbean Princess","yr":2014},{"x":1273,"y":8.96,"s":"Veendam","yr":2014},{"x":1096,"y":5.93,"s":"Maasdam","yr":2014},{"x":2122,"y":5.23,"s":"Grandeur of the Seas","yr":2014},{"x":3161,"y":3.86,"s":"Crown Princess","yr":2014},{"x":2120,"y":4.58,"s":"Grandeur of the Seas","yr":2014},{"x":3009,"y":5.25,"s":"Crown Princess","yr":2014},{"x":1948,"y":10.16,"s":"Grandeur of the Seas","yr":2015},{"x":2896,"y":4.9,"s":"Celebrity Equinox","yr":2015},{"x":2472,"y":5.87,"s":"Norwegian Pearl","yr":2015},{"x":2117,"y":5.01,"s":"Celebrity Infinity","yr":2015},{"x":1746,"y":7.73,"s":"Legend of the Seas","yr":2015},{"x":1958,"y":5.06,"s":"Coral Princess","yr":2015},{"x":1138,"y":5.89,"s":"Maasdam","yr":2015},{"x":1185,"y":5.82,"s":"Oceania Marina","yr":2015},{"x":2588,"y":5.22,"s":"Star Princess","yr":2015},{"x":1160,"y":6.38,"s":"Oceania Riviera","yr":2015},{"x":3239,"y":5.03,"s":"Caribbean Princess","yr":2015},{"x":1429,"y":5.11,"s":"Veendam","yr":2015},{"x":3060,"y":5.88,"s":"Crown Princess","yr":2016},{"x":1045,"y":3.16,"s":"Oceania Riviera","yr":2016},{"x":1225,"y":10.12,"s":"Oceania Riviera","yr":2016},{"x":603,"y":10.45,"s":"Ocean Princess","yr":2016},{"x":4061,"y":3.25,"s":"Anthem of the Seas","yr":2016},{"x":3001,"y":5.76,"s":"Carnival Sunshine","yr":2016},{"x":388,"y":6.19,"s":"Silver Spirit","yr":2016},{"x":2882,"y":4.44,"s":"Norwegian Gem","yr":2016},{"x":1204,"y":8.14,"s":"Oceania Riviera","yr":2016},{"x":915,"y":30.27,"s":"Balmoral","yr":2016},{"x":2680,"y":4.89,"s":"Disney Wonder","yr":2016},{"x":668,"y":3.44,"s":"Adonia","yr":2016},{"x":1843,"y":4.88,"s":"Oosterdam","yr":2016},{"x":2016,"y":7.79,"s":"Coral Princess","yr":2017},{"x":639,"y":3.6,"s":"Regatta","yr":2017},{"x":1480,"y":4.59,"s":"Volendam","yr":2017},{"x":1473,"y":3.12,"s":"Volendam","yr":2017},{"x":2210,"y":3.3,"s":"Nieuw Amsterdam","yr":2017},{"x":2086,"y":8.01,"s":"Noordam","yr":2017},{"x":2143,"y":3.83,"s":"Noordam","yr":2017},{"x":57,"y":22.81,"s":"National Geographic Sea Bird","yr":2017},{"x":2957,"y":6.22,"s":"Crown Princess","yr":2017},{"x":3034,"y":5.7,"s":"Celebrity Reflection","yr":2017},{"x":4160,"y":7.45,"s":"Independence of the Seas","yr":2017},{"x":2181,"y":3.26,"s":"Island Princess","yr":2018},{"x":663,"y":3.02,"s":"Azamara Quest","yr":2018},{"x":1899,"y":4.21,"s":"Queen Victoria","yr":2018},{"x":2140,"y":5.19,"s":"Celebrity Infinity","yr":2018},{"x":327,"y":8.56,"s":"Silver Shadow","yr":2018},{"x":1472,"y":6.45,"s":"Zaandam","yr":2018},{"x":652,"y":5.83,"s":"Seven Seas Mariner","yr":2018},{"x":196,"y":3.06,"s":"Pearl Mist","yr":2018},{"x":1285,"y":5.29,"s":"Volendam","yr":2018},{"x":700,"y":4.29,"s":"Crystal Symphony","yr":2018},{"x":917,"y":3.05,"s":"Viking Star","yr":2018},{"x":6285,"y":8.93,"s":"Oasis of the Seas","yr":2019},{"x":925,"y":4.11,"s":"Viking Sea","yr":2019},{"x":904,"y":3.98,"s":"Viking Star","yr":2019},{"x":2193,"y":4.61,"s":"Island Princess","yr":2019},{"x":1066,"y":3.38,"s":"Oceania Marina","yr":2019},{"x":2055,"y":5.69,"s":"AIDAdiva","yr":2019},{"x":3241,"y":0.52,"s":"Carnival Conquest","yr":2019},{"x":2166,"y":3.92,"s":"AIDAluna","yr":2019},{"x":2251,"y":3.69,"s":"AIDAdiva","yr":2019},{"x":3602,"y":3.53,"s":"Norwegian Joy","yr":2019},{"x":3035,"y":12.22,"s":"Caribbean Princess","yr":2020},{"x":3039,"y":7.9,"s":"Caribbean Princess","yr":2020},{"x":18,"y":11.11,"s":"Westerdam","yr":2020},{"x":1764,"y":5.56,"s":"Grandeur of the Seas","yr":2020},{"x":640,"y":18.12,"s":"Viking Sea","yr":2021},{"x":380,"y":3.95,"s":"Seabourn Odyssey","yr":2022},{"x":2109,"y":3.65,"s":"Carnival Splendor","yr":2022},{"x":521,"y":2.88,"s":"Silver Moon","yr":2022},{"x":1986,"y":4.23,"s":"Arcadia","yr":2022},{"x":1752,"y":5.02,"s":"Arcadia","yr":2023},{"x":2160,"y":3.24,"s":"Brilliance of the Seas","yr":2023},{"x":2185,"y":3.11,"s":"Jewel of the Seas","yr":2023},{"x":2881,"y":9.86,"s":"Ruby Princess","yr":2023},{"x":2062,"y":4.22,"s":"Celebrity Constellation","yr":2023},{"x":2579,"y":4.73,"s":"Celebrity Equinox","yr":2023},{"x":2148,"y":7.22,"s":"Enchantment of the Seas","yr":2023},{"x":2123,"y":4.66,"s":"Emerald Princess","yr":2023},{"x":2362,"y":4.95,"s":"Enchantment of the Seas","yr":2023},{"x":1727,"y":5.73,"s":"Grand Princess","yr":2023},{"x":1971,"y":12.48,"s":"Nieuw Amsterdam","yr":2023},{"x":2144,"y":7.09,"s":"Celebrity Summit","yr":2023},{"x":838,"y":13.13,"s":"Viking Neptune","yr":2023},{"x":2198,"y":3.23,"s":"Scarlet Lady","yr":2023},{"x":2056,"y":4.47,"s":"Celebrity Constellation","yr":2024},{"x":1824,"y":7.07,"s":"Queen Victoria","yr":2024},{"x":2522,"y":4.12,"s":"Koningsdam","yr":2024},{"x":633,"y":4.42,"s":"Silver Nova","yr":2024},{"x":2532,"y":4.86,"s":"Sapphire Princess","yr":2024},{"x":1993,"y":3.36,"s":"Radiance of the Seas","yr":2024},{"x":6364,"y":1.9,"s":"Allure of the Seas","yr":2024},{"x":2264,"y":3.18,"s":"Celebrity Summit","yr":2024},{"x":1959,"y":6.53,"s":"Arcadia","yr":2024},{"x":2172,"y":8.29,"s":"Radiance of the Seas","yr":2024},{"x":1822,"y":3.79,"s":"Coral Princess","yr":2024},{"x":3001,"y":3.43,"s":"Ruby Princess","yr":2024},{"x":1923,"y":4.52,"s":"Zuiderdam","yr":2024},{"x":2192,"y":5.79,"s":"Rotterdam","yr":2024},{"x":2430,"y":5.68,"s":"Queen Mary 2","yr":2024},{"x":2565,"y":13.49,"s":"Queen Mary 2","yr":2024},{"x":639,"y":2.82,"s":"Oceania Nautica","yr":2024},{"x":2139,"y":5.1,"s":"Eurodam","yr":2024}],"scatter_fit":{"slope":-0.0009609605429769241,"intercept":8.535931345192084},"gap_by_era":[{"era":"2001-2005","years":"2004-2005","ratio":2.73,"pax":5.9,"crew":2.16,"n":54},{"era":"2006-2010","years":"2006-2010","ratio":4.05,"pax":7.04,"crew":1.74,"n":103},{"era":"2011-2015","years":"2011-2015","ratio":4.53,"pax":6.49,"crew":1.43,"n":60},{"era":"2016-2020","years":"2016-2020","ratio":4.56,"pax":5.79,"crew":1.27,"n":49},{"era":"2021-2026","years":"2021-2024","ratio":3.18,"pax":5.43,"crew":1.71,"n":37}]};
+</script>
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const tt = document.getElementById("tt");
+const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmt = (n) => n.toLocaleString();
+
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function clear(svg) { while (svg.firstChild) svg.removeChild(svg.firstChild); }
+function showTT(html, ev) {
+  tt.innerHTML = html;
+  tt.style.opacity = 1;
+  const r = tt.getBoundingClientRect();
+  let x = ev.clientX + 14, y = ev.clientY - r.height - 12;
+  if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - 14;
+  if (y < 8) y = ev.clientY + 18;
+  tt.style.left = x + "px"; tt.style.top = y + "px";
+}
+const hideTT = () => { tt.style.opacity = 0; };
+function roundedBar(bx, by, bw, bh, fill, svg) {
+  const r = Math.min(4, bw / 2, bh);
+  el("path", {
+    d: `M${bx},${by + bh} L${bx},${by + r} Q${bx},${by} ${bx + r},${by} ` +
+       `L${bx + bw - r},${by} Q${bx + bw},${by} ${bx + bw},${by + r} L${bx + bw},${by + bh} Z`,
+    fill
+  }, svg);
+}
+
+/* ---------------------------------------------------------------- stat row */
+(function statRow() {
+  const h = DATA.finding1, d = DATA.dataset;
+  const cells = [
+    { v: h.pax_rate + "%", c: "o", l: "of passengers fell ill<br>" + fmt(h.pax_ill) + " of " + fmt(h.pax_total) },
+    { v: h.crew_rate + "%", c: "b", l: "of crew fell ill<br>" + fmt(h.crew_ill) + " of " + fmt(h.crew_total) },
+    { v: h.ratio + "×", c: "", l: "the passenger rate, as a<br>multiple of the crew rate" },
+    { v: Math.round(100 * h.n_higher / h.n) + "%", c: "", l: "of outbreaks had a higher passenger<br>rate (" + h.n_higher + " of " + h.n + ")" },
+    { v: fmt(d.analysis_set), c: "", l: "investigations analysed<br>across " + d.ships + " vessels" },
+  ];
+  document.getElementById("stats").innerHTML = cells.map(c =>
+    `<div class="stat"><div class="v ${c.c}">${c.v}</div><div class="l">${c.l}</div></div>`).join("");
+  document.getElementById("statnote").textContent =
+    `${d.transcribed} investigations were transcribed from CDC records; ${d.dropped_no_date} carry ` +
+    `month-only sailing dates and cannot be placed on a timeline, leaving ${d.analysis_set}. ` +
+    `Rates come from the ${d.paired} records carrying both passenger and crew counts, spanning ` +
+    `${d.paired_year_min} to ${d.paired_year_max}.`;
+})();
+
+/* --------------------------------------------------- 1. subgroup dumbbells */
+function drawSub() {
+  const svg = document.getElementById("c-sub"); clear(svg);
+  const W = 760, H = 430, L = 196, R = 58, T = 26, B = 40;
+  const rows = DATA.subgroups;
+  const maxX = 8;
+  const x = v => L + (W - L - R) * (v / maxX);
+  const rowH = (H - T - B) / rows.length;
+  const LABELS = { ship_size_band: "Passengers aboard", era: "Era", season: "Season" };
+
+  for (let v = 0; v <= maxX; v += 2) {
+    el("line", { x1: x(v), x2: x(v), y1: T - 6, y2: H - B, class: "grid-line" }, svg);
+    el("text", { x: x(v), y: H - B + 18, class: "tick", "text-anchor": "middle" }, svg)
+      .textContent = v + "%";
+  }
+  el("text", { x: L, y: T - 14, class: "alab" }, svg).textContent = "Pooled attack rate";
+
+  let lastBy = null;
+  rows.forEach((r, i) => {
+    const cy = T + rowH * i + rowH / 2;
+    if (r.by !== lastBy) {
+      el("text", { x: 6, y: cy - 1, class: "dlab", fill: css("--ink-3") }, svg)
+        .textContent = LABELS[r.by] || r.by;
+      lastBy = r.by;
+      if (i) el("line", { x1: 6, x2: W - R, y1: T + rowH * i - 2, y2: T + rowH * i - 2,
+        stroke: css("--grid"), "stroke-width": 1 }, svg);
+    }
+    const name = r.group.replace(/^\d\.\s*/, "").replace(" (norovirus season)", "");
+    el("text", { x: L - 12, y: cy + 4, class: "tick", "text-anchor": "end" }, svg).textContent = name;
+
+    el("line", { x1: x(r.crew), x2: x(r.pax), y1: cy, y2: cy,
+      stroke: css("--axis"), "stroke-width": 2, "stroke-linecap": "round" }, svg);
+    el("circle", { cx: x(r.crew), cy, r: 6, fill: css("--s1"),
+      stroke: css("--surface-1"), "stroke-width": 2 }, svg);
+    el("circle", { cx: x(r.pax), cy, r: 6, fill: css("--s2"),
+      stroke: css("--surface-1"), "stroke-width": 2 }, svg);
+    el("text", { x: W - R + 8, y: cy + 4, class: "dlab", fill: css("--ink-2") }, svg)
+      .textContent = r.ratio + "×";
+
+    const hit = el("rect", { x: 0, y: T + rowH * i, width: W, height: rowH, fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", e => showTT(
+      `<b>${name}</b><div class="r"><i>Passengers</i><span>${r.pax}%</span></div>` +
+      `<div class="r"><i>Crew</i><span>${r.crew}%</span></div>` +
+      `<div class="r"><i>Ratio</i><span>${r.ratio}×</span></div>` +
+      `<div class="r"><i>Outbreaks</i><span>${r.n}</span></div>`, e));
+    hit.addEventListener("mouseleave", hideTT);
+  });
+  el("text", { x: W - R + 8, y: T - 14, class: "alab" }, svg).textContent = "Ratio";
+}
+
+/* ------------------------------------------------------------- 2. era line */
+function drawEra() {
+  const svg = document.getElementById("c-era"); clear(svg);
+  const W = 760, H = 360, L = 52, R = 112, T = 20, B = 52;
+  const d = DATA.eras, n = d.length, maxY = 8;
+  const x = i => L + (W - L - R) * (n === 1 ? .5 : i / (n - 1));
+  const y = v => T + (H - T - B) * (1 - v / maxY);
+
+  for (let v = 0; v <= maxY; v += 2) {
+    el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), class: "grid-line" }, svg);
+    el("text", { x: L - 10, y: y(v) + 4, class: "tick", "text-anchor": "end" }, svg)
+      .textContent = v + "%";
+  }
+  el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), class: "axis-line" }, svg);
+  d.forEach((p, i) => {
+    el("text", { x: x(i), y: H - B + 18, class: "tick", "text-anchor": "middle" }, svg)
+      .textContent = p.era;
+    el("text", { x: x(i), y: H - B + 33, class: "tick", "text-anchor": "middle",
+      fill: css("--ink-3") }, svg).textContent = "n=" + p.n;
+  });
+
+  [{ k: "pax", name: "Passengers", color: css("--s2") },
+   { k: "crew", name: "Crew", color: css("--s1") }].forEach(s => {
+    const pts = d.map((p, i) => [x(i), y(p[s.k])]);
+    el("path", { d: "M" + pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join("L"),
+      fill: "none", stroke: s.color, "stroke-width": 2,
+      "stroke-linejoin": "round", "stroke-linecap": "round" }, svg);
+    pts.forEach(p => el("circle", { cx: p[0], cy: p[1], r: 6.5,
+      fill: css("--surface-1"), stroke: s.color, "stroke-width": 2 }, svg));
+    const last = pts[pts.length - 1];
+    el("text", { x: last[0] + 14, y: last[1] + 4, class: "dlab", fill: s.color }, svg)
+      .textContent = s.name;
+    el("text", { x: last[0] + 14, y: last[1] + 20, class: "tick", fill: css("--ink-3") }, svg)
+      .textContent = d[d.length - 1][s.k] + "%";
+  });
+
+  d.forEach((p, i) => {
+    const w = (W - L - R) / n;
+    const r = el("rect", { x: x(i) - w / 2, y: T, width: w, height: H - T - B,
+      fill: "transparent" }, svg);
+    r.addEventListener("mousemove", e => showTT(
+      `<b>${p.era}</b><div class="r"><i>Years with counts</i><span>${p.years}</span></div>` +
+      `<div class="r"><i>Passengers</i><span>${p.pax}%</span></div>` +
+      `<div class="r"><i>Crew</i><span>${p.crew}%</span></div>` +
+      `<div class="r"><i>Ratio</i><span>${p.ratio}×</span></div>` +
+      `<div class="r"><i>Outbreaks</i><span>${p.n}</span></div>`, e));
+    r.addEventListener("mouseleave", hideTT);
+  });
+}
+
+/* ------------------------------------------------- 3. consecutive sailings */
+function drawConsec() {
+  const svg = document.getElementById("c-consec"); clear(svg);
+  const W = 760, H = 180, L = 16, R = 16, T = 46, B = 44;
+  const f = DATA.finding3;
+  // three categories, not two: consecutive sailings, records that overlap the
+  // prior investigation outright, and genuinely separate episodes.
+  const total = f.repeats_30d;
+  const consec = f.consecutive_sailings;
+  const overlap = f.overlapping_30d || 0;
+  const rest = total - consec - overlap;
+  const barW = W - L - R, barH = H - T - B;
+  const w1 = barW * consec / total;
+  const w2 = barW * overlap / total;
+
+  roundedBar(L, T, w1, barH, css("--s2"), svg);
+  if (overlap) roundedBar(L + w1 + 2, T, Math.max(w2 - 2, 3), barH, css("--s3"), svg);
+  roundedBar(L + w1 + w2 + 2, T, barW - w1 - w2 - 2, barH, css("--s1"), svg);
+
+  el("text", { x: L + 12, y: T + barH / 2 + 5, class: "dlab", fill: "#ffffff" }, svg)
+    .textContent = consec + " begin within 2 days of the previous voyage ending";
+  el("text", { x: L + w1 + w2 + 12, y: T + barH / 2 + 5, class: "dlab", fill: "#ffffff" }, svg)
+    .textContent = rest + " do not";
+  el("text", { x: L, y: T - 16, class: "alab" }, svg)
+    .textContent = `All ${total} outbreaks beginning within 30 days of a prior outbreak on the same ship`;
+  el("text", { x: L, y: H - 12, class: "tick", fill: css("--ink-3") }, svg)
+    .textContent = `Median gap: ${f.median_days_after_prior_end} days`
+      + (overlap ? `. The thin band is ${overlap} record that overlaps the prior investigation outright.` : "");
+}
+
+/* ---------------------------------------------------------- 4. clustering */
+function drawClus() {
+  const svg = document.getElementById("c-clus"); clear(svg);
+  const W = 760, H = 300, L = 46, R = 16, T = 26, B = 46;
+  const d = DATA.clustering, maxY = 80, gw = (W - L - R) / d.length;
+  const y = v => T + (H - T - B) * (1 - v / maxY);
+
+  for (let v = 0; v <= maxY; v += 20) {
+    el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), class: "grid-line" }, svg);
+    el("text", { x: L - 10, y: y(v) + 4, class: "tick", "text-anchor": "end" }, svg).textContent = v;
+  }
+  el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), class: "axis-line" }, svg);
+  el("text", { x: L, y: T - 8, class: "alab" }, svg)
+    .textContent = "Repeat outbreaks on the same vessel";
+
+  d.forEach((p, i) => {
+    const exp = p["within year"];
+    const pairs = [{ v: p.observed, c: css("--s2") }, { v: exp.expected, c: css("--s1") }];
+    const bw = (gw - 28) / 2;
+    pairs.forEach((b, j) => {
+      const bx = L + gw * i + 14 + j * (bw + 2);
+      const by = y(b.v);
+      roundedBar(bx, by, bw, y(0) - by, b.c, svg);
+      el("text", { x: bx + bw / 2, y: by - 7, class: "tick", "text-anchor": "middle",
+        fill: css("--ink-2") }, svg).textContent = b.v;
+    });
+    el("text", { x: L + gw * i + gw / 2, y: H - B + 20, class: "tick", "text-anchor": "middle" }, svg)
+      .textContent = p.window + " days";
+    const hit = el("rect", { x: L + gw * i, y: T, width: gw, height: H - T - B,
+      fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", e => showTT(
+      `<b>Within ${p.window} days</b><div class="r"><i>Observed</i><span>${p.observed}</span></div>` +
+      `<div class="r"><i>Unrestricted</i><span>${p.unrestricted.expected} (${p.unrestricted.times}×)</span></div>` +
+      `<div class="r"><i>3-year block</i><span>${p["within 3-year block"].expected} (${p["within 3-year block"].times}×)</span></div>` +
+      `<div class="r"><i>Within year</i><span>${exp.expected} (${exp.times}×)</span></div>`, e));
+    hit.addEventListener("mouseleave", hideTT);
+  });
+
+  document.getElementById("clus-table").innerHTML =
+    `<table><thead><tr><th>Window</th><th>Observed</th><th>Unrestricted shuffle</th>
+     <th>Within 3-year block</th><th>Within calendar year</th></tr></thead><tbody>` +
+    d.map(p => `<tr><td>${p.window} days</td><td>${p.observed}</td>` +
+      ["unrestricted", "within 3-year block", "within year"].map(k =>
+        `<td>${p[k].expected} ± ${p[k].sd} (${p[k].times}×)</td>`).join("") +
+      `</tr>`).join("") + `</tbody></table>`;
+}
+
+/* ------------------------------------------------------------- 5. scatter */
+function drawScatter() {
+  const svg = document.getElementById("c-scatter"); clear(svg);
+  const W = 760, H = 380, L = 52, R = 20, T = 20, B = 52;
+  const pts = DATA.scatter, fit = DATA.scatter_fit;
+  const maxX = 6600, maxY = 45;
+  const x = v => L + (W - L - R) * (v / maxX);
+  const y = v => T + (H - T - B) * (1 - Math.min(v, maxY) / maxY);
+
+  for (let v = 0; v <= maxY; v += 15) {
+    el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), class: "grid-line" }, svg);
+    el("text", { x: L - 10, y: y(v) + 4, class: "tick", "text-anchor": "end" }, svg)
+      .textContent = v + "%";
+  }
+  for (let v = 0; v <= 6000; v += 2000) {
+    el("text", { x: x(v), y: H - B + 20, class: "tick", "text-anchor": "middle" }, svg)
+      .textContent = v.toLocaleString();
+  }
+  el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), class: "axis-line" }, svg);
+  el("text", { x: L, y: T - 4, class: "alab" }, svg).textContent = "Passenger attack rate";
+  el("text", { x: (L + W - R) / 2, y: H - 10, class: "alab", "text-anchor": "middle" }, svg)
+    .textContent = "Passengers aboard";
+
+  pts.forEach(p => {
+    const c = el("circle", { cx: x(p.x), cy: y(p.y), r: 4.5, fill: css("--s1"),
+      "fill-opacity": 0.42, stroke: css("--surface-1"), "stroke-width": 1 }, svg);
+    c.addEventListener("mousemove", e => showTT(
+      `<b>${p.s}</b><div class="r"><i>Year</i><span>${p.yr}</span></div>` +
+      `<div class="r"><i>Passengers</i><span>${fmt(p.x)}</span></div>` +
+      `<div class="r"><i>Attack rate</i><span>${p.y}%</span></div>`, e));
+    c.addEventListener("mouseleave", hideTT);
+  });
+
+  const yB = fit.intercept + fit.slope * maxX;
+  el("line", { x1: x(0), y1: y(fit.intercept), x2: x(maxX), y2: y(yB),
+    stroke: css("--ink-2"), "stroke-width": 2, "stroke-dasharray": "7 5",
+    "stroke-linecap": "round" }, svg);
+  el("text", { x: W - R - 6, y: y(yB) - 26, class: "dlab", fill: css("--ink-2"),
+    "text-anchor": "end" }, svg).textContent = "Least-squares fit";
+  el("text", { x: W - R - 6, y: y(yB) - 11, class: "tick", fill: css("--ink-3"),
+    "text-anchor": "end" }, svg).textContent = "not significant, p = 0.29";
+}
+
+/* --------------------------------------------------------------- 6. months */
+let monthMode = "count";
+function drawMonth() {
+  const svg = document.getElementById("c-month"); clear(svg);
+  const W = 760, H = 320, L = 46, R = 16, T = 30, B = 42;
+  const d = DATA.months;
+  const key = monthMode === "count" ? "n_all" : "pax";
+  const maxV = Math.max(...d.map(p => p[key] || 0));
+  const maxY = monthMode === "count" ? Math.ceil(maxV / 20) * 20 : Math.ceil(maxV);
+  const bw = (W - L - R) / d.length;
+  const y = v => T + (H - T - B) * (1 - v / maxY);
+
+  el("rect", { x: L, y: T, width: bw * 3, height: H - T - B,
+    fill: css("--s1"), opacity: 0.07 }, svg);
+  el("rect", { x: L + bw * 11, y: T, width: bw, height: H - T - B,
+    fill: css("--s1"), opacity: 0.07 }, svg);
+  el("text", { x: L + 6, y: T + 14, class: "alab", fill: css("--ink-3") }, svg)
+    .textContent = "Norovirus season";
+
+  for (let i = 0; i <= 4; i++) {
+    const v = maxY * i / 4;
+    el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), class: "grid-line" }, svg);
+    el("text", { x: L - 10, y: y(v) + 4, class: "tick", "text-anchor": "end" }, svg)
+      .textContent = monthMode === "count" ? v : v.toFixed(0) + "%";
+  }
+  el("line", { x1: L, x2: W - R, y1: y(0), y2: y(0), class: "axis-line" }, svg);
+
+  d.forEach((p, i) => {
+    const v = p[key] || 0;
+    const bx = L + bw * i + 2, bWid = bw - 4, by = y(v);
+    roundedBar(bx, by, bWid, Math.max(0, y(0) - by), css("--s1"), svg);
+    el("text", { x: bx + bWid / 2, y: H - B + 19, class: "tick", "text-anchor": "middle" }, svg)
+      .textContent = p.month;
+    const hit = el("rect", { x: L + bw * i, y: T, width: bw, height: H - T - B,
+      fill: "transparent" }, svg);
+    hit.addEventListener("mousemove", e => showTT(
+      `<b>${p.month}</b><div class="r"><i>Outbreaks (all)</i><span>${p.n_all}</span></div>` +
+      `<div class="r"><i>With counts</i><span>${p.n_paired}</span></div>` +
+      (p.pax !== null ? `<div class="r"><i>Attack rate</i><span>${p.pax}%</span></div>` : ""), e));
+    hit.addEventListener("mouseleave", hideTT);
+  });
+  el("text", { x: L, y: T - 10, class: "alab" }, svg).textContent =
+    monthMode === "count"
+      ? "Outbreaks investigated, all 425 records"
+      : "Pooled passenger attack rate, 303 records with counts";
+}
+
+/* ------------------------------------------------------------------ tables */
+const TABLES = {
+  sub: () => `<table><thead><tr><th>Subgroup</th><th>Outbreaks</th><th>Passenger rate</th>
+    <th>Crew rate</th><th>Ratio</th></tr></thead><tbody>` +
+    DATA.subgroups.map(r => `<tr><td>${r.group.replace(/^\d\.\s*/, "")}</td><td>${r.n}</td>
+      <td>${r.pax}%</td><td>${r.crew}%</td><td>${r.ratio}×</td></tr>`).join("") + `</tbody></table>`,
+  era: () => `<table><thead><tr><th>Era</th><th>Years with counts</th><th>Outbreaks</th>
+    <th>Passenger rate</th><th>Crew rate</th><th>Ratio</th></tr></thead><tbody>` +
+    DATA.eras.map(e => `<tr><td>${e.era}</td><td>${e.years}</td><td>${e.n}</td>
+      <td>${e.pax}%</td><td>${e.crew}%</td><td>${e.ratio}×</td></tr>`).join("") + `</tbody></table>`,
+  month: () => `<table><thead><tr><th>Month</th><th>Outbreaks (all)</th><th>With counts</th>
+    <th>Passenger rate</th></tr></thead><tbody>` +
+    DATA.months.map(m => `<tr><td>${m.month}</td><td>${m.n_all}</td><td>${m.n_paired}</td>
+      <td>${m.pax === null ? "—" : m.pax + "%"}</td></tr>`).join("") + `</tbody></table>`,
+  clus: () => `<table><thead><tr><th>Window</th><th>Observed</th><th>Unrestricted</th>
+    <th>3-year block</th><th>Within year</th></tr></thead><tbody>` +
+    DATA.clustering.map(c => `<tr><td>${c.window} days</td><td>${c.observed}</td>` +
+      ["unrestricted", "within 3-year block", "within year"].map(k =>
+        `<td>${c[k].expected} ± ${c[k].sd} (${c[k].times}×)</td>`).join("") +
+      `</tr>`).join("") + `</tbody></table>`,
+};
+const TKEYS = ["sub", "era", "month", "clus"];
+function setTable(which) {
+  document.getElementById("tables").innerHTML = TABLES[which]();
+  TKEYS.forEach(k => document.getElementById("t-" + k)
+    .setAttribute("aria-pressed", String(k === which)));
+}
+
+/* -------------------------------------------------------------------- wire */
+// byline counts come from the data, never typed into the page
+(() => {
+  const e = document.getElementById("n-ships");
+  if (e) e.textContent = DATA.dataset.ships;
+})();
+
+function drawAll() { drawSub(); drawEra(); drawConsec(); drawClus(); drawScatter(); drawMonth(); }
+drawAll();
+setTable("sub");
+TKEYS.forEach(k => document.getElementById("t-" + k)
+  .addEventListener("click", () => setTable(k)));
+
+function setMonth(mode) {
+  monthMode = mode;
+  document.getElementById("m-count").setAttribute("aria-pressed", String(mode === "count"));
+  document.getElementById("m-rate").setAttribute("aria-pressed", String(mode === "rate"));
+  drawMonth();
+}
+document.getElementById("m-count").addEventListener("click", () => setMonth("count"));
+document.getElementById("m-rate").addEventListener("click", () => setMonth("rate"));
+
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
+addEventListener("scroll", hideTT, { passive: true });
+
+</script>
+</body></html>

@@ -1,0 +1,2212 @@
+{
+ "dataset": {
+  "transcribed": 428,
+  "dropped_no_date": 3,
+  "analysis_set": 425,
+  "paired": 303,
+  "unpaired": 122,
+  "ships": 158,
+  "lines": 40,
+  "first_voyage": "1993-12-26",
+  "last_voyage": "2026-07-15",
+  "paired_year_min": 2004,
+  "paired_year_max": 2024
+ },
+ "finding1": {
+  "pax_rate": 6.34,
+  "crew_rate": 1.66,
+  "ratio": 3.83,
+  "pax_ill": 35673,
+  "pax_total": 563103,
+  "crew_ill": 4107,
+  "crew_total": 248020,
+  "n_higher": 289,
+  "n_lower": 14,
+  "n": 303,
+  "wilcoxon_p": 1.1769990609722491e-47,
+  "rank_biserial": 0.96,
+  "median_diff_pp": 4.11
+ },
+ "subgroups": [
+  {
+   "by": "ship_size_band",
+   "group": "1. Under 1,000",
+   "n": 43,
+   "pax": 7.51,
+   "crew": 2.05,
+   "ratio": 3.67
+  },
+  {
+   "by": "ship_size_band",
+   "group": "2. 1,000-1,999",
+   "n": 132,
+   "pax": 6.85,
+   "crew": 1.72,
+   "ratio": 3.99
+  },
+  {
+   "by": "ship_size_band",
+   "group": "3. 2,000-2,999",
+   "n": 92,
+   "pax": 5.8,
+   "crew": 1.54,
+   "ratio": 3.78
+  },
+  {
+   "by": "ship_size_band",
+   "group": "4. 3,000+",
+   "n": 36,
+   "pax": 6.18,
+   "crew": 1.63,
+   "ratio": 3.8
+  },
+  {
+   "by": "era",
+   "group": "2001-2005",
+   "n": 54,
+   "pax": 5.9,
+   "crew": 2.16,
+   "ratio": 2.73
+  },
+  {
+   "by": "era",
+   "group": "2006-2010",
+   "n": 103,
+   "pax": 7.04,
+   "crew": 1.74,
+   "ratio": 4.05
+  },
+  {
+   "by": "era",
+   "group": "2011-2015",
+   "n": 60,
+   "pax": 6.49,
+   "crew": 1.43,
+   "ratio": 4.53
+  },
+  {
+   "by": "era",
+   "group": "2016-2020",
+   "n": 49,
+   "pax": 5.79,
+   "crew": 1.27,
+   "ratio": 4.56
+  },
+  {
+   "by": "era",
+   "group": "2021-2026",
+   "n": 37,
+   "pax": 5.43,
+   "crew": 1.71,
+   "ratio": 3.18
+  },
+  {
+   "by": "season",
+   "group": "Apr-Nov",
+   "n": 140,
+   "pax": 5.82,
+   "crew": 1.43,
+   "ratio": 4.06
+  },
+  {
+   "by": "season",
+   "group": "Dec-Mar (norovirus season)",
+   "n": 163,
+   "pax": 6.78,
+   "crew": 1.84,
+   "ratio": 3.68
+  }
+ ],
+ "eras": [
+  {
+   "era": "2001-2005",
+   "n": 54,
+   "years": "2004-2005",
+   "pax": 5.9,
+   "crew": 2.16,
+   "ratio": 2.73
+  },
+  {
+   "era": "2006-2010",
+   "n": 103,
+   "years": "2006-2010",
+   "pax": 7.04,
+   "crew": 1.74,
+   "ratio": 4.05
+  },
+  {
+   "era": "2011-2015",
+   "n": 60,
+   "years": "2011-2015",
+   "pax": 6.49,
+   "crew": 1.43,
+   "ratio": 4.53
+  },
+  {
+   "era": "2016-2020",
+   "n": 49,
+   "years": "2016-2020",
+   "pax": 5.79,
+   "crew": 1.27,
+   "ratio": 4.56
+  },
+  {
+   "era": "2021-2026",
+   "n": 37,
+   "years": "2021-2024",
+   "pax": 5.43,
+   "crew": 1.71,
+   "ratio": 3.18
+  }
+ ],
+ "finding2": {
+  "crew_first": 2.16,
+  "crew_last": 1.71,
+  "crew_trough": 1.27,
+  "crew_trough_era": "2016-2020",
+  "crew_change_full_pct": -21,
+  "crew_change_to_trough_pct": -41,
+  "pax_first": 5.9,
+  "pax_last": 5.43,
+  "pax_change_full_pct": -8,
+  "crew_rho": -0.097,
+  "crew_p": 0.092,
+  "pax_rho": 0.011,
+  "pax_p": 0.85
+ },
+ "finding3": {
+  "repeats_30d": 47,
+  "consecutive_sailings": 38,
+  "overlapping_30d": 1,
+  "median_days_after_prior_end": 0.0,
+  "non_consecutive_30d": 8
+ },
+ "clustering": [
+  {
+   "window": 30,
+   "observed": 47,
+   "unrestricted": {
+    "expected": 7.8,
+    "sd": 2.7,
+    "p": "<0.0005",
+    "times": 6.0
+   },
+   "within 3-year block": {
+    "expected": 17.2,
+    "sd": 3.5,
+    "p": "<0.0005",
+    "times": 2.7
+   },
+   "within year": {
+    "expected": 24.1,
+    "sd": 3.7,
+    "p": "<0.0005",
+    "times": 2.0
+   }
+  },
+  {
+   "window": 60,
+   "observed": 63,
+   "unrestricted": {
+    "expected": 14.5,
+    "sd": 3.6,
+    "p": "<0.0005",
+    "times": 4.3
+   },
+   "within 3-year block": {
+    "expected": 30.1,
+    "sd": 4.4,
+    "p": "<0.0005",
+    "times": 2.1
+   },
+   "within year": {
+    "expected": 39.7,
+    "sd": 4.2,
+    "p": "<0.0005",
+    "times": 1.6
+   }
+  },
+  {
+   "window": 90,
+   "observed": 70,
+   "unrestricted": {
+    "expected": 20.6,
+    "sd": 4.2,
+    "p": "<0.0005",
+    "times": 3.4
+   },
+   "within 3-year block": {
+    "expected": 40.8,
+    "sd": 4.8,
+    "p": "<0.0005",
+    "times": 1.7
+   },
+   "within year": {
+    "expected": 51.5,
+    "sd": 4.4,
+    "p": "<0.0005",
+    "times": 1.4
+   }
+  }
+ ],
+ "finding4": {
+  "size_rho": -0.061,
+  "size_p": 0.292,
+  "len_rho": 0.02,
+  "len_p": 0.726,
+  "len_n": 302,
+  "len_excluded": 1
+ },
+ "quality": {
+  "cdc_pax_pct_disagreements": 7,
+  "cdc_crew_pct_disagreements": 6,
+  "cdc_pct_disagreements_total": 13,
+  "voyage_days_source_errors": 2,
+  "outside_voyage_day_window": 4,
+  "overlapping_records": 1,
+  "unpaired_1993_2003": 88,
+  "unpaired_2004_on": 34,
+  "paired_distinct_ships": 120,
+  "operators_with_one_paired_record": 10
+ },
+ "months": [
+  {
+   "month": "Jan",
+   "n_all": 69,
+   "n_paired": 45,
+   "pax": 7.89
+  },
+  {
+   "month": "Feb",
+   "n_all": 55,
+   "n_paired": 45,
+   "pax": 7.1
+  },
+  {
+   "month": "Mar",
+   "n_all": 58,
+   "n_paired": 43,
+   "pax": 6.21
+  },
+  {
+   "month": "Apr",
+   "n_all": 46,
+   "n_paired": 35,
+   "pax": 5.3
+  },
+  {
+   "month": "May",
+   "n_all": 28,
+   "n_paired": 22,
+   "pax": 5.54
+  },
+  {
+   "month": "Jun",
+   "n_all": 18,
+   "n_paired": 9,
+   "pax": 5.89
+  },
+  {
+   "month": "Jul",
+   "n_all": 18,
+   "n_paired": 10,
+   "pax": 5.81
+  },
+  {
+   "month": "Aug",
+   "n_all": 10,
+   "n_paired": 5,
+   "pax": 5.9
+  },
+  {
+   "month": "Sep",
+   "n_all": 21,
+   "n_paired": 16,
+   "pax": 6.23
+  },
+  {
+   "month": "Oct",
+   "n_all": 29,
+   "n_paired": 19,
+   "pax": 5.29
+  },
+  {
+   "month": "Nov",
+   "n_all": 33,
+   "n_paired": 24,
+   "pax": 7.0
+  },
+  {
+   "month": "Dec",
+   "n_all": 40,
+   "n_paired": 30,
+   "pax": 5.31
+  }
+ ],
+ "scatter": [
+  {
+   "x": 1563,
+   "y": 1.86,
+   "s": "Queen Elizabeth 2",
+   "yr": 2004
+  },
+  {
+   "x": 2095,
+   "y": 6.35,
+   "s": "Coral Princess",
+   "yr": 2004
+  },
+  {
+   "x": 68,
+   "y": 0.0,
+   "s": "The World",
+   "yr": 2004
+  },
+  {
+   "x": 1260,
+   "y": 5.79,
+   "s": "Ryndam",
+   "yr": 2004
+  },
+  {
+   "x": 1576,
+   "y": 18.85,
+   "s": "Carnival Celebration",
+   "yr": 2004
+  },
+  {
+   "x": 2187,
+   "y": 3.57,
+   "s": "Brilliance of the Seas",
+   "yr": 2004
+  },
+  {
+   "x": 1521,
+   "y": 5.39,
+   "s": "Queen Elizabeth 2",
+   "yr": 2004
+  },
+  {
+   "x": 1793,
+   "y": 3.63,
+   "s": "Oriana",
+   "yr": 2004
+  },
+  {
+   "x": 2241,
+   "y": 1.47,
+   "s": "Queen Mary 2",
+   "yr": 2004
+  },
+  {
+   "x": 984,
+   "y": 7.83,
+   "s": "Norwegian Crown",
+   "yr": 2004
+  },
+  {
+   "x": 1129,
+   "y": 4.07,
+   "s": "Royal Princess",
+   "yr": 2004
+  },
+  {
+   "x": 1018,
+   "y": 4.42,
+   "s": "Norwegian Crown",
+   "yr": 2004
+  },
+  {
+   "x": 1250,
+   "y": 3.92,
+   "s": "Horizon",
+   "yr": 2004
+  },
+  {
+   "x": 1338,
+   "y": 4.41,
+   "s": "Zenith",
+   "yr": 2004
+  },
+  {
+   "x": 1130,
+   "y": 6.64,
+   "s": "Amsterdam",
+   "yr": 2004
+  },
+  {
+   "x": 1262,
+   "y": 3.01,
+   "s": "Rotterdam",
+   "yr": 2004
+  },
+  {
+   "x": 1681,
+   "y": 3.21,
+   "s": "Norwegian Wind",
+   "yr": 2004
+  },
+  {
+   "x": 1238,
+   "y": 7.35,
+   "s": "Veendam",
+   "yr": 2004
+  },
+  {
+   "x": 1109,
+   "y": 3.88,
+   "s": "Norwegian Crown",
+   "yr": 2004
+  },
+  {
+   "x": 1070,
+   "y": 3.64,
+   "s": "Norwegian Crown",
+   "yr": 2004
+  },
+  {
+   "x": 2018,
+   "y": 18.58,
+   "s": "Island Princess",
+   "yr": 2004
+  },
+  {
+   "x": 2036,
+   "y": 3.24,
+   "s": "Island Princess",
+   "yr": 2004
+  },
+  {
+   "x": 2273,
+   "y": 3.12,
+   "s": "Serenade of the Seas",
+   "yr": 2004
+  },
+  {
+   "x": 758,
+   "y": 9.37,
+   "s": "M/V Explorer",
+   "yr": 2004
+  },
+  {
+   "x": 618,
+   "y": 9.22,
+   "s": "Pacific Princess",
+   "yr": 2004
+  },
+  {
+   "x": 371,
+   "y": 3.5,
+   "s": "Silver Shadow",
+   "yr": 2004
+  },
+  {
+   "x": 1998,
+   "y": 7.26,
+   "s": "Sun Princess",
+   "yr": 2004
+  },
+  {
+   "x": 1537,
+   "y": 3.06,
+   "s": "Regal Princess",
+   "yr": 2004
+  },
+  {
+   "x": 2031,
+   "y": 4.97,
+   "s": "Sun Princess",
+   "yr": 2004
+  },
+  {
+   "x": 1230,
+   "y": 3.17,
+   "s": "Veendam",
+   "yr": 2004
+  },
+  {
+   "x": 275,
+   "y": 4.0,
+   "s": "Silver Shadow",
+   "yr": 2004
+  },
+  {
+   "x": 1749,
+   "y": 4.17,
+   "s": "Norwegian Dream",
+   "yr": 2004
+  },
+  {
+   "x": 2742,
+   "y": 3.06,
+   "s": "Golden Princess",
+   "yr": 2004
+  },
+  {
+   "x": 2116,
+   "y": 3.97,
+   "s": "Coral Princess",
+   "yr": 2004
+  },
+  {
+   "x": 2136,
+   "y": 4.82,
+   "s": "Enchantment of the Seas",
+   "yr": 2005
+  },
+  {
+   "x": 1236,
+   "y": 5.66,
+   "s": "Veendam",
+   "yr": 2005
+  },
+  {
+   "x": 2035,
+   "y": 4.57,
+   "s": "Sun Princess",
+   "yr": 2005
+  },
+  {
+   "x": 1223,
+   "y": 22.24,
+   "s": "Ryndam",
+   "yr": 2005
+  },
+  {
+   "x": 1229,
+   "y": 17.82,
+   "s": "Veendam",
+   "yr": 2005
+  },
+  {
+   "x": 3465,
+   "y": 7.97,
+   "s": "Mariner of the Seas",
+   "yr": 2005
+  },
+  {
+   "x": 1544,
+   "y": 4.66,
+   "s": "Empress of the Seas",
+   "yr": 2005
+  },
+  {
+   "x": 551,
+   "y": 0.18,
+   "s": "Seven Seas Mariner",
+   "yr": 2005
+  },
+  {
+   "x": 1692,
+   "y": 5.26,
+   "s": "Carnival Celebration",
+   "yr": 2005
+  },
+  {
+   "x": 1647,
+   "y": 4.19,
+   "s": "Carnival Celebration",
+   "yr": 2005
+  },
+  {
+   "x": 1308,
+   "y": 10.55,
+   "s": "Zenith",
+   "yr": 2005
+  },
+  {
+   "x": 1267,
+   "y": 6.95,
+   "s": "Veendam",
+   "yr": 2005
+  },
+  {
+   "x": 1163,
+   "y": 3.27,
+   "s": "Royal Princess",
+   "yr": 2005
+  },
+  {
+   "x": 1014,
+   "y": 5.92,
+   "s": "Norwegian Crown",
+   "yr": 2005
+  },
+  {
+   "x": 570,
+   "y": 3.51,
+   "s": "Crystal Symphony",
+   "yr": 2005
+  },
+  {
+   "x": 1309,
+   "y": 3.21,
+   "s": "Horizon",
+   "yr": 2005
+  },
+  {
+   "x": 1974,
+   "y": 3.85,
+   "s": "Dawn Princess",
+   "yr": 2005
+  },
+  {
+   "x": 2000,
+   "y": 6.05,
+   "s": "Sun Princess",
+   "yr": 2005
+  },
+  {
+   "x": 1592,
+   "y": 8.48,
+   "s": "Splendour of the Seas",
+   "yr": 2005
+  },
+  {
+   "x": 1888,
+   "y": 5.56,
+   "s": "Zuiderdam",
+   "yr": 2005
+  },
+  {
+   "x": 562,
+   "y": 4.09,
+   "s": "Minerva II",
+   "yr": 2006
+  },
+  {
+   "x": 2498,
+   "y": 3.44,
+   "s": "Queen Mary 2",
+   "yr": 2006
+  },
+  {
+   "x": 3245,
+   "y": 7.49,
+   "s": "Explorer of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 582,
+   "y": 4.47,
+   "s": "Seven Seas Mariner",
+   "yr": 2006
+  },
+  {
+   "x": 1412,
+   "y": 3.61,
+   "s": "Volendam",
+   "yr": 2006
+  },
+  {
+   "x": 2263,
+   "y": 5.74,
+   "s": "Grandeur of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 1902,
+   "y": 10.04,
+   "s": "Celebrity Mercury",
+   "yr": 2006
+  },
+  {
+   "x": 1950,
+   "y": 3.69,
+   "s": "Island Princess",
+   "yr": 2006
+  },
+  {
+   "x": 1360,
+   "y": 9.56,
+   "s": "Amsterdam",
+   "yr": 2006
+  },
+  {
+   "x": 1986,
+   "y": 5.39,
+   "s": "Celebrity Mercury",
+   "yr": 2006
+  },
+  {
+   "x": 1294,
+   "y": 5.87,
+   "s": "Amsterdam",
+   "yr": 2006
+  },
+  {
+   "x": 1214,
+   "y": 5.52,
+   "s": "Veendam",
+   "yr": 2006
+  },
+  {
+   "x": 3292,
+   "y": 3.55,
+   "s": "Explorer of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 2107,
+   "y": 3.37,
+   "s": "Norwegian Sun",
+   "yr": 2006
+  },
+  {
+   "x": 2388,
+   "y": 4.82,
+   "s": "Norwegian Star",
+   "yr": 2006
+  },
+  {
+   "x": 1270,
+   "y": 8.03,
+   "s": "Ryndam",
+   "yr": 2006
+  },
+  {
+   "x": 1230,
+   "y": 5.2,
+   "s": "Ryndam",
+   "yr": 2006
+  },
+  {
+   "x": 2025,
+   "y": 5.98,
+   "s": "Celebrity Mercury",
+   "yr": 2006
+  },
+  {
+   "x": 2282,
+   "y": 4.6,
+   "s": "Celebrity Infinity",
+   "yr": 2006
+  },
+  {
+   "x": 3671,
+   "y": 6.76,
+   "s": "Mariner of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 2131,
+   "y": 10.65,
+   "s": "Radiance of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 2643,
+   "y": 4.81,
+   "s": "Diamond Princess",
+   "yr": 2006
+  },
+  {
+   "x": 1955,
+   "y": 3.32,
+   "s": "Celebrity Constellation",
+   "yr": 2006
+  },
+  {
+   "x": 1959,
+   "y": 5.56,
+   "s": "Island Princess",
+   "yr": 2006
+  },
+  {
+   "x": 1776,
+   "y": 4.05,
+   "s": "Celebrity Constellation",
+   "yr": 2006
+  },
+  {
+   "x": 2023,
+   "y": 3.36,
+   "s": "Serenade of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 2804,
+   "y": 19.12,
+   "s": "Carnival Liberty",
+   "yr": 2006
+  },
+  {
+   "x": 3260,
+   "y": 3.96,
+   "s": "Adventure of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 1911,
+   "y": 3.77,
+   "s": "Celebrity Summit",
+   "yr": 2006
+  },
+  {
+   "x": 2241,
+   "y": 4.51,
+   "s": "Serenade of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 3823,
+   "y": 8.84,
+   "s": "Freedom of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 1431,
+   "y": 4.47,
+   "s": "Zaandam",
+   "yr": 2006
+  },
+  {
+   "x": 1671,
+   "y": 4.61,
+   "s": "Norwegian Wind",
+   "yr": 2006
+  },
+  {
+   "x": 2013,
+   "y": 5.56,
+   "s": "Sun Princess",
+   "yr": 2006
+  },
+  {
+   "x": 3907,
+   "y": 2.18,
+   "s": "Freedom of the Seas",
+   "yr": 2006
+  },
+  {
+   "x": 1479,
+   "y": 5.07,
+   "s": "Regal Princess",
+   "yr": 2006
+  },
+  {
+   "x": 1652,
+   "y": 16.71,
+   "s": "Queen Elizabeth 2",
+   "yr": 2007
+  },
+  {
+   "x": 1153,
+   "y": 9.54,
+   "s": "Ryndam",
+   "yr": 2007
+  },
+  {
+   "x": 1385,
+   "y": 7.58,
+   "s": "Volendam",
+   "yr": 2007
+  },
+  {
+   "x": 1936,
+   "y": 9.25,
+   "s": "Island Princess",
+   "yr": 2007
+  },
+  {
+   "x": 36,
+   "y": 22.22,
+   "s": "Spirit of Nantucket",
+   "yr": 2007
+  },
+  {
+   "x": 1790,
+   "y": 8.16,
+   "s": "Westerdam",
+   "yr": 2007
+  },
+  {
+   "x": 1260,
+   "y": 14.6,
+   "s": "Ryndam",
+   "yr": 2007
+  },
+  {
+   "x": 614,
+   "y": 6.19,
+   "s": "Seven Seas Mariner",
+   "yr": 2007
+  },
+  {
+   "x": 1209,
+   "y": 5.05,
+   "s": "Ryndam",
+   "yr": 2007
+  },
+  {
+   "x": 1504,
+   "y": 4.59,
+   "s": "Regal Princess",
+   "yr": 2007
+  },
+  {
+   "x": 169,
+   "y": 15.38,
+   "s": "Empress of the North",
+   "yr": 2007
+  },
+  {
+   "x": 1363,
+   "y": 6.53,
+   "s": "Zenith",
+   "yr": 2007
+  },
+  {
+   "x": 456,
+   "y": 4.82,
+   "s": "Seven Seas Navigator",
+   "yr": 2007
+  },
+  {
+   "x": 1427,
+   "y": 4.84,
+   "s": "Volendam",
+   "yr": 2007
+  },
+  {
+   "x": 2490,
+   "y": 3.69,
+   "s": "Norwegian Pearl",
+   "yr": 2007
+  },
+  {
+   "x": 2331,
+   "y": 7.59,
+   "s": "Norwegian Star",
+   "yr": 2007
+  },
+  {
+   "x": 3846,
+   "y": 5.2,
+   "s": "Liberty of the Seas",
+   "yr": 2007
+  },
+  {
+   "x": 2205,
+   "y": 5.26,
+   "s": "Carnival Spirit",
+   "yr": 2007
+  },
+  {
+   "x": 1246,
+   "y": 4.09,
+   "s": "Norwegian Crown",
+   "yr": 2007
+  },
+  {
+   "x": 2169,
+   "y": 6.87,
+   "s": "Norwegian Dawn",
+   "yr": 2007
+  },
+  {
+   "x": 1371,
+   "y": 6.64,
+   "s": "Zaandam",
+   "yr": 2007
+  },
+  {
+   "x": 2377,
+   "y": 14.09,
+   "s": "Norwegian Pearl",
+   "yr": 2007
+  },
+  {
+   "x": 642,
+   "y": 7.79,
+   "s": "Pacific Princess",
+   "yr": 2007
+  },
+  {
+   "x": 3209,
+   "y": 4.86,
+   "s": "Emerald Princess",
+   "yr": 2007
+  },
+  {
+   "x": 1451,
+   "y": 5.86,
+   "s": "Volendam",
+   "yr": 2008
+  },
+  {
+   "x": 1980,
+   "y": 5.2,
+   "s": "Noordam",
+   "yr": 2008
+  },
+  {
+   "x": 2427,
+   "y": 9.39,
+   "s": "Norwegian Star",
+   "yr": 2008
+  },
+  {
+   "x": 1548,
+   "y": 7.82,
+   "s": "Carnival Holiday",
+   "yr": 2008
+  },
+  {
+   "x": 1226,
+   "y": 9.22,
+   "s": "Ryndam",
+   "yr": 2008
+  },
+  {
+   "x": 1428,
+   "y": 7.0,
+   "s": "Zaandam",
+   "yr": 2008
+  },
+  {
+   "x": 1579,
+   "y": 6.27,
+   "s": "Norwegian Dream",
+   "yr": 2008
+  },
+  {
+   "x": 1313,
+   "y": 8.53,
+   "s": "Veendam",
+   "yr": 2008
+  },
+  {
+   "x": 620,
+   "y": 5.32,
+   "s": "Seven Seas Mariner",
+   "yr": 2008
+  },
+  {
+   "x": 2132,
+   "y": 6.75,
+   "s": "Norwegian Jewel",
+   "yr": 2008
+  },
+  {
+   "x": 68,
+   "y": 42.65,
+   "s": "Grande Caribe",
+   "yr": 2008
+  },
+  {
+   "x": 2098,
+   "y": 4.1,
+   "s": "Norwegian Jewel",
+   "yr": 2008
+  },
+  {
+   "x": 3081,
+   "y": 5.58,
+   "s": "Caribbean Princess",
+   "yr": 2008
+  },
+  {
+   "x": 1820,
+   "y": 14.4,
+   "s": "Zuiderdam",
+   "yr": 2008
+  },
+  {
+   "x": 1402,
+   "y": 5.63,
+   "s": "Maasdam",
+   "yr": 2009
+  },
+  {
+   "x": 1842,
+   "y": 8.14,
+   "s": "Celebrity Mercury",
+   "yr": 2009
+  },
+  {
+   "x": 1996,
+   "y": 12.63,
+   "s": "Coral Princess",
+   "yr": 2009
+  },
+  {
+   "x": 1408,
+   "y": 5.26,
+   "s": "Zaandam",
+   "yr": 2009
+  },
+  {
+   "x": 1840,
+   "y": 5.98,
+   "s": "Oosterdam",
+   "yr": 2009
+  },
+  {
+   "x": 1862,
+   "y": 6.07,
+   "s": "Celebrity Mercury",
+   "yr": 2009
+  },
+  {
+   "x": 1318,
+   "y": 10.24,
+   "s": "Amsterdam",
+   "yr": 2009
+  },
+  {
+   "x": 3253,
+   "y": 6.39,
+   "s": "Carnival Liberty",
+   "yr": 2009
+  },
+  {
+   "x": 1954,
+   "y": 5.12,
+   "s": "Island Princess",
+   "yr": 2009
+  },
+  {
+   "x": 2001,
+   "y": 6.05,
+   "s": "Coral Princess",
+   "yr": 2009
+  },
+  {
+   "x": 1546,
+   "y": 6.53,
+   "s": "Amsterdam",
+   "yr": 2009
+  },
+  {
+   "x": 1826,
+   "y": 8.71,
+   "s": "Noordam",
+   "yr": 2009
+  },
+  {
+   "x": 1991,
+   "y": 3.67,
+   "s": "Norwegian Spirit",
+   "yr": 2009
+  },
+  {
+   "x": 621,
+   "y": 4.51,
+   "s": "Seven Seas Mariner",
+   "yr": 2009
+  },
+  {
+   "x": 1317,
+   "y": 4.25,
+   "s": "Amsterdam",
+   "yr": 2009
+  },
+  {
+   "x": 1874,
+   "y": 9.55,
+   "s": "Queen Victoria",
+   "yr": 2010
+  },
+  {
+   "x": 1163,
+   "y": 25.19,
+   "s": "Balmoral",
+   "yr": 2010
+  },
+  {
+   "x": 1854,
+   "y": 9.06,
+   "s": "Queen Victoria",
+   "yr": 2010
+  },
+  {
+   "x": 1833,
+   "y": 22.42,
+   "s": "Celebrity Mercury",
+   "yr": 2010
+  },
+  {
+   "x": 1211,
+   "y": 13.87,
+   "s": "Maasdam",
+   "yr": 2010
+  },
+  {
+   "x": 2158,
+   "y": 4.73,
+   "s": "Jewel of the Seas",
+   "yr": 2010
+  },
+  {
+   "x": 2020,
+   "y": 7.77,
+   "s": "Celebrity Millennium",
+   "yr": 2010
+  },
+  {
+   "x": 1749,
+   "y": 10.41,
+   "s": "Celebrity Mercury",
+   "yr": 2010
+  },
+  {
+   "x": 1829,
+   "y": 22.2,
+   "s": "Celebrity Mercury",
+   "yr": 2010
+  },
+  {
+   "x": 1846,
+   "y": 3.95,
+   "s": "Zuiderdam",
+   "yr": 2010
+  },
+  {
+   "x": 3003,
+   "y": 3.76,
+   "s": "Carnival Glory",
+   "yr": 2010
+  },
+  {
+   "x": 2027,
+   "y": 6.61,
+   "s": "Nieuw Amsterdam",
+   "yr": 2010
+  },
+  {
+   "x": 814,
+   "y": 4.55,
+   "s": "Crystal Symphony",
+   "yr": 2010
+  },
+  {
+   "x": 2483,
+   "y": 7.45,
+   "s": "Queen Mary 2",
+   "yr": 2010
+  },
+  {
+   "x": 2336,
+   "y": 6.42,
+   "s": "Radiance of the Seas",
+   "yr": 2011
+  },
+  {
+   "x": 2839,
+   "y": 4.16,
+   "s": "Celebrity Solstice",
+   "yr": 2011
+  },
+  {
+   "x": 1126,
+   "y": 3.46,
+   "s": "Oceania Marina",
+   "yr": 2011
+  },
+  {
+   "x": 1507,
+   "y": 4.38,
+   "s": "Coral Princess",
+   "yr": 2011
+  },
+  {
+   "x": 1990,
+   "y": 3.22,
+   "s": "Coral Princess",
+   "yr": 2011
+  },
+  {
+   "x": 2058,
+   "y": 5.05,
+   "s": "Celebrity Millennium",
+   "yr": 2011
+  },
+  {
+   "x": 2053,
+   "y": 6.23,
+   "s": "Sea Princess",
+   "yr": 2011
+  },
+  {
+   "x": 61,
+   "y": 27.87,
+   "s": "National Geographic Sea Lion",
+   "yr": 2011
+  },
+  {
+   "x": 2128,
+   "y": 0.66,
+   "s": "Sea Princess",
+   "yr": 2011
+  },
+  {
+   "x": 1188,
+   "y": 12.46,
+   "s": "Ryndam",
+   "yr": 2011
+  },
+  {
+   "x": 2730,
+   "y": 4.69,
+   "s": "Celebrity Solstice",
+   "yr": 2011
+  },
+  {
+   "x": 1298,
+   "y": 5.32,
+   "s": "Ryndam",
+   "yr": 2011
+  },
+  {
+   "x": 2409,
+   "y": 3.9,
+   "s": "Norwegian Spirit",
+   "yr": 2011
+  },
+  {
+   "x": 1255,
+   "y": 4.46,
+   "s": "Maasdam",
+   "yr": 2011
+  },
+  {
+   "x": 1727,
+   "y": 8.4,
+   "s": "Aurora",
+   "yr": 2012
+  },
+  {
+   "x": 3310,
+   "y": 7.49,
+   "s": "Voyager of the Seas",
+   "yr": 2012
+  },
+  {
+   "x": 3103,
+   "y": 11.73,
+   "s": "Crown Princess",
+   "yr": 2012
+  },
+  {
+   "x": 1992,
+   "y": 5.12,
+   "s": "Celebrity Constellation",
+   "yr": 2012
+  },
+  {
+   "x": 2809,
+   "y": 6.34,
+   "s": "Celebrity Silhouette",
+   "yr": 2012
+  },
+  {
+   "x": 3078,
+   "y": 9.36,
+   "s": "Crown Princess",
+   "yr": 2012
+  },
+  {
+   "x": 3147,
+   "y": 4.1,
+   "s": "Ruby Princess",
+   "yr": 2012
+  },
+  {
+   "x": 1918,
+   "y": 10.48,
+   "s": "Sun Princess",
+   "yr": 2012
+  },
+  {
+   "x": 3652,
+   "y": 5.61,
+   "s": "Carnival Glory",
+   "yr": 2012
+  },
+  {
+   "x": 1778,
+   "y": 6.41,
+   "s": "Dawn Princess",
+   "yr": 2012
+  },
+  {
+   "x": 2129,
+   "y": 7.19,
+   "s": "Rhapsody of the Seas",
+   "yr": 2012
+  },
+  {
+   "x": 2971,
+   "y": 5.02,
+   "s": "Ruby Princess",
+   "yr": 2012
+  },
+  {
+   "x": 791,
+   "y": 10.75,
+   "s": "Amsterdam",
+   "yr": 2012
+  },
+  {
+   "x": 1019,
+   "y": 3.63,
+   "s": "Oceania Riviera",
+   "yr": 2012
+  },
+  {
+   "x": 3235,
+   "y": 5.84,
+   "s": "Emerald Princess",
+   "yr": 2012
+  },
+  {
+   "x": 2613,
+   "y": 7.81,
+   "s": "Queen Mary 2",
+   "yr": 2012
+  },
+  {
+   "x": 1991,
+   "y": 5.93,
+   "s": "Vision of the Seas",
+   "yr": 2013
+  },
+  {
+   "x": 3129,
+   "y": 8.5,
+   "s": "Ruby Princess",
+   "yr": 2013
+  },
+  {
+   "x": 2086,
+   "y": 4.84,
+   "s": "Celebrity Infinity",
+   "yr": 2013
+  },
+  {
+   "x": 2849,
+   "y": 6.42,
+   "s": "Celebrity Solstice",
+   "yr": 2013
+  },
+  {
+   "x": 1237,
+   "y": 4.85,
+   "s": "Veendam",
+   "yr": 2013
+  },
+  {
+   "x": 1963,
+   "y": 1.17,
+   "s": "Celebrity Millennium",
+   "yr": 2013
+  },
+  {
+   "x": 816,
+   "y": 15.32,
+   "s": "Crystal Symphony",
+   "yr": 2013
+  },
+  {
+   "x": 2112,
+   "y": 15.25,
+   "s": "Celebrity Summit",
+   "yr": 2013
+  },
+  {
+   "x": 2600,
+   "y": 4.27,
+   "s": "Norwegian Gem",
+   "yr": 2013
+  },
+  {
+   "x": 2318,
+   "y": 5.61,
+   "s": "Norwegian Star",
+   "yr": 2014
+  },
+  {
+   "x": 3071,
+   "y": 20.64,
+   "s": "Explorer of the Seas",
+   "yr": 2014
+  },
+  {
+   "x": 3102,
+   "y": 5.83,
+   "s": "Caribbean Princess",
+   "yr": 2014
+  },
+  {
+   "x": 1273,
+   "y": 8.96,
+   "s": "Veendam",
+   "yr": 2014
+  },
+  {
+   "x": 1096,
+   "y": 5.93,
+   "s": "Maasdam",
+   "yr": 2014
+  },
+  {
+   "x": 2122,
+   "y": 5.23,
+   "s": "Grandeur of the Seas",
+   "yr": 2014
+  },
+  {
+   "x": 3161,
+   "y": 3.86,
+   "s": "Crown Princess",
+   "yr": 2014
+  },
+  {
+   "x": 2120,
+   "y": 4.58,
+   "s": "Grandeur of the Seas",
+   "yr": 2014
+  },
+  {
+   "x": 3009,
+   "y": 5.25,
+   "s": "Crown Princess",
+   "yr": 2014
+  },
+  {
+   "x": 1948,
+   "y": 10.16,
+   "s": "Grandeur of the Seas",
+   "yr": 2015
+  },
+  {
+   "x": 2896,
+   "y": 4.9,
+   "s": "Celebrity Equinox",
+   "yr": 2015
+  },
+  {
+   "x": 2472,
+   "y": 5.87,
+   "s": "Norwegian Pearl",
+   "yr": 2015
+  },
+  {
+   "x": 2117,
+   "y": 5.01,
+   "s": "Celebrity Infinity",
+   "yr": 2015
+  },
+  {
+   "x": 1746,
+   "y": 7.73,
+   "s": "Legend of the Seas",
+   "yr": 2015
+  },
+  {
+   "x": 1958,
+   "y": 5.06,
+   "s": "Coral Princess",
+   "yr": 2015
+  },
+  {
+   "x": 1138,
+   "y": 5.89,
+   "s": "Maasdam",
+   "yr": 2015
+  },
+  {
+   "x": 1185,
+   "y": 5.82,
+   "s": "Oceania Marina",
+   "yr": 2015
+  },
+  {
+   "x": 2588,
+   "y": 5.22,
+   "s": "Star Princess",
+   "yr": 2015
+  },
+  {
+   "x": 1160,
+   "y": 6.38,
+   "s": "Oceania Riviera",
+   "yr": 2015
+  },
+  {
+   "x": 3239,
+   "y": 5.03,
+   "s": "Caribbean Princess",
+   "yr": 2015
+  },
+  {
+   "x": 1429,
+   "y": 5.11,
+   "s": "Veendam",
+   "yr": 2015
+  },
+  {
+   "x": 3060,
+   "y": 5.88,
+   "s": "Crown Princess",
+   "yr": 2016
+  },
+  {
+   "x": 1045,
+   "y": 3.16,
+   "s": "Oceania Riviera",
+   "yr": 2016
+  },
+  {
+   "x": 1225,
+   "y": 10.12,
+   "s": "Oceania Riviera",
+   "yr": 2016
+  },
+  {
+   "x": 603,
+   "y": 10.45,
+   "s": "Ocean Princess",
+   "yr": 2016
+  },
+  {
+   "x": 4061,
+   "y": 3.25,
+   "s": "Anthem of the Seas",
+   "yr": 2016
+  },
+  {
+   "x": 3001,
+   "y": 5.76,
+   "s": "Carnival Sunshine",
+   "yr": 2016
+  },
+  {
+   "x": 388,
+   "y": 6.19,
+   "s": "Silver Spirit",
+   "yr": 2016
+  },
+  {
+   "x": 2882,
+   "y": 4.44,
+   "s": "Norwegian Gem",
+   "yr": 2016
+  },
+  {
+   "x": 1204,
+   "y": 8.14,
+   "s": "Oceania Riviera",
+   "yr": 2016
+  },
+  {
+   "x": 915,
+   "y": 30.27,
+   "s": "Balmoral",
+   "yr": 2016
+  },
+  {
+   "x": 2680,
+   "y": 4.89,
+   "s": "Disney Wonder",
+   "yr": 2016
+  },
+  {
+   "x": 668,
+   "y": 3.44,
+   "s": "Adonia",
+   "yr": 2016
+  },
+  {
+   "x": 1843,
+   "y": 4.88,
+   "s": "Oosterdam",
+   "yr": 2016
+  },
+  {
+   "x": 2016,
+   "y": 7.79,
+   "s": "Coral Princess",
+   "yr": 2017
+  },
+  {
+   "x": 639,
+   "y": 3.6,
+   "s": "Regatta",
+   "yr": 2017
+  },
+  {
+   "x": 1480,
+   "y": 4.59,
+   "s": "Volendam",
+   "yr": 2017
+  },
+  {
+   "x": 1473,
+   "y": 3.12,
+   "s": "Volendam",
+   "yr": 2017
+  },
+  {
+   "x": 2210,
+   "y": 3.3,
+   "s": "Nieuw Amsterdam",
+   "yr": 2017
+  },
+  {
+   "x": 2086,
+   "y": 8.01,
+   "s": "Noordam",
+   "yr": 2017
+  },
+  {
+   "x": 2143,
+   "y": 3.83,
+   "s": "Noordam",
+   "yr": 2017
+  },
+  {
+   "x": 57,
+   "y": 22.81,
+   "s": "National Geographic Sea Bird",
+   "yr": 2017
+  },
+  {
+   "x": 2957,
+   "y": 6.22,
+   "s": "Crown Princess",
+   "yr": 2017
+  },
+  {
+   "x": 3034,
+   "y": 5.7,
+   "s": "Celebrity Reflection",
+   "yr": 2017
+  },
+  {
+   "x": 4160,
+   "y": 7.45,
+   "s": "Independence of the Seas",
+   "yr": 2017
+  },
+  {
+   "x": 2181,
+   "y": 3.26,
+   "s": "Island Princess",
+   "yr": 2018
+  },
+  {
+   "x": 663,
+   "y": 3.02,
+   "s": "Azamara Quest",
+   "yr": 2018
+  },
+  {
+   "x": 1899,
+   "y": 4.21,
+   "s": "Queen Victoria",
+   "yr": 2018
+  },
+  {
+   "x": 2140,
+   "y": 5.19,
+   "s": "Celebrity Infinity",
+   "yr": 2018
+  },
+  {
+   "x": 327,
+   "y": 8.56,
+   "s": "Silver Shadow",
+   "yr": 2018
+  },
+  {
+   "x": 1472,
+   "y": 6.45,
+   "s": "Zaandam",
+   "yr": 2018
+  },
+  {
+   "x": 652,
+   "y": 5.83,
+   "s": "Seven Seas Mariner",
+   "yr": 2018
+  },
+  {
+   "x": 196,
+   "y": 3.06,
+   "s": "Pearl Mist",
+   "yr": 2018
+  },
+  {
+   "x": 1285,
+   "y": 5.29,
+   "s": "Volendam",
+   "yr": 2018
+  },
+  {
+   "x": 700,
+   "y": 4.29,
+   "s": "Crystal Symphony",
+   "yr": 2018
+  },
+  {
+   "x": 917,
+   "y": 3.05,
+   "s": "Viking Star",
+   "yr": 2018
+  },
+  {
+   "x": 6285,
+   "y": 8.93,
+   "s": "Oasis of the Seas",
+   "yr": 2019
+  },
+  {
+   "x": 925,
+   "y": 4.11,
+   "s": "Viking Sea",
+   "yr": 2019
+  },
+  {
+   "x": 904,
+   "y": 3.98,
+   "s": "Viking Star",
+   "yr": 2019
+  },
+  {
+   "x": 2193,
+   "y": 4.61,
+   "s": "Island Princess",
+   "yr": 2019
+  },
+  {
+   "x": 1066,
+   "y": 3.38,
+   "s": "Oceania Marina",
+   "yr": 2019
+  },
+  {
+   "x": 2055,
+   "y": 5.69,
+   "s": "AIDAdiva",
+   "yr": 2019
+  },
+  {
+   "x": 3241,
+   "y": 0.52,
+   "s": "Carnival Conquest",
+   "yr": 2019
+  },
+  {
+   "x": 2166,
+   "y": 3.92,
+   "s": "AIDAluna",
+   "yr": 2019
+  },
+  {
+   "x": 2251,
+   "y": 3.69,
+   "s": "AIDAdiva",
+   "yr": 2019
+  },
+  {
+   "x": 3602,
+   "y": 3.53,
+   "s": "Norwegian Joy",
+   "yr": 2019
+  },
+  {
+   "x": 3035,
+   "y": 12.22,
+   "s": "Caribbean Princess",
+   "yr": 2020
+  },
+  {
+   "x": 3039,
+   "y": 7.9,
+   "s": "Caribbean Princess",
+   "yr": 2020
+  },
+  {
+   "x": 18,
+   "y": 11.11,
+   "s": "Westerdam",
+   "yr": 2020
+  },
+  {
+   "x": 1764,
+   "y": 5.56,
+   "s": "Grandeur of the Seas",
+   "yr": 2020
+  },
+  {
+   "x": 640,
+   "y": 18.12,
+   "s": "Viking Sea",
+   "yr": 2021
+  },
+  {
+   "x": 380,
+   "y": 3.95,
+   "s": "Seabourn Odyssey",
+   "yr": 2022
+  },
+  {
+   "x": 2109,
+   "y": 3.65,
+   "s": "Carnival Splendor",
+   "yr": 2022
+  },
+  {
+   "x": 521,
+   "y": 2.88,
+   "s": "Silver Moon",
+   "yr": 2022
+  },
+  {
+   "x": 1986,
+   "y": 4.23,
+   "s": "Arcadia",
+   "yr": 2022
+  },
+  {
+   "x": 1752,
+   "y": 5.02,
+   "s": "Arcadia",
+   "yr": 2023
+  },
+  {
+   "x": 2160,
+   "y": 3.24,
+   "s": "Brilliance of the Seas",
+   "yr": 2023
+  },
+  {
+   "x": 2185,
+   "y": 3.11,
+   "s": "Jewel of the Seas",
+   "yr": 2023
+  },
+  {
+   "x": 2881,
+   "y": 9.86,
+   "s": "Ruby Princess",
+   "yr": 2023
+  },
+  {
+   "x": 2062,
+   "y": 4.22,
+   "s": "Celebrity Constellation",
+   "yr": 2023
+  },
+  {
+   "x": 2579,
+   "y": 4.73,
+   "s": "Celebrity Equinox",
+   "yr": 2023
+  },
+  {
+   "x": 2148,
+   "y": 7.22,
+   "s": "Enchantment of the Seas",
+   "yr": 2023
+  },
+  {
+   "x": 2123,
+   "y": 4.66,
+   "s": "Emerald Princess",
+   "yr": 2023
+  },
+  {
+   "x": 2362,
+   "y": 4.95,
+   "s": "Enchantment of the Seas",
+   "yr": 2023
+  },
+  {
+   "x": 1727,
+   "y": 5.73,
+   "s": "Grand Princess",
+   "yr": 2023
+  },
+  {
+   "x": 1971,
+   "y": 12.48,
+   "s": "Nieuw Amsterdam",
+   "yr": 2023
+  },
+  {
+   "x": 2144,
+   "y": 7.09,
+   "s": "Celebrity Summit",
+   "yr": 2023
+  },
+  {
+   "x": 838,
+   "y": 13.13,
+   "s": "Viking Neptune",
+   "yr": 2023
+  },
+  {
+   "x": 2198,
+   "y": 3.23,
+   "s": "Scarlet Lady",
+   "yr": 2023
+  },
+  {
+   "x": 2056,
+   "y": 4.47,
+   "s": "Celebrity Constellation",
+   "yr": 2024
+  },
+  {
+   "x": 1824,
+   "y": 7.07,
+   "s": "Queen Victoria",
+   "yr": 2024
+  },
+  {
+   "x": 2522,
+   "y": 4.12,
+   "s": "Koningsdam",
+   "yr": 2024
+  },
+  {
+   "x": 633,
+   "y": 4.42,
+   "s": "Silver Nova",
+   "yr": 2024
+  },
+  {
+   "x": 2532,
+   "y": 4.86,
+   "s": "Sapphire Princess",
+   "yr": 2024
+  },
+  {
+   "x": 1993,
+   "y": 3.36,
+   "s": "Radiance of the Seas",
+   "yr": 2024
+  },
+  {
+   "x": 6364,
+   "y": 1.9,
+   "s": "Allure of the Seas",
+   "yr": 2024
+  },
+  {
+   "x": 2264,
+   "y": 3.18,
+   "s": "Celebrity Summit",
+   "yr": 2024
+  },
+  {
+   "x": 1959,
+   "y": 6.53,
+   "s": "Arcadia",
+   "yr": 2024
+  },
+  {
+   "x": 2172,
+   "y": 8.29,
+   "s": "Radiance of the Seas",
+   "yr": 2024
+  },
+  {
+   "x": 1822,
+   "y": 3.79,
+   "s": "Coral Princess",
+   "yr": 2024
+  },
+  {
+   "x": 3001,
+   "y": 3.43,
+   "s": "Ruby Princess",
+   "yr": 2024
+  },
+  {
+   "x": 1923,
+   "y": 4.52,
+   "s": "Zuiderdam",
+   "yr": 2024
+  },
+  {
+   "x": 2192,
+   "y": 5.79,
+   "s": "Rotterdam",
+   "yr": 2024
+  },
+  {
+   "x": 2430,
+   "y": 5.68,
+   "s": "Queen Mary 2",
+   "yr": 2024
+  },
+  {
+   "x": 2565,
+   "y": 13.49,
+   "s": "Queen Mary 2",
+   "yr": 2024
+  },
+  {
+   "x": 639,
+   "y": 2.82,
+   "s": "Oceania Nautica",
+   "yr": 2024
+  },
+  {
+   "x": 2139,
+   "y": 5.1,
+   "s": "Eurodam",
+   "yr": 2024
+  }
+ ],
+ "scatter_fit": {
+  "slope": -0.0009609605429769241,
+  "intercept": 8.535931345192084
+ },
+ "gap_by_era": [
+  {
+   "era": "2001-2005",
+   "years": "2004-2005",
+   "ratio": 2.73,
+   "pax": 5.9,
+   "crew": 2.16,
+   "n": 54
+  },
+  {
+   "era": "2006-2010",
+   "years": "2006-2010",
+   "ratio": 4.05,
+   "pax": 7.04,
+   "crew": 1.74,
+   "n": 103
+  },
+  {
+   "era": "2011-2015",
+   "years": "2011-2015",
+   "ratio": 4.53,
+   "pax": 6.49,
+   "crew": 1.43,
+   "n": 60
+  },
+  {
+   "era": "2016-2020",
+   "years": "2016-2020",
+   "ratio": 4.56,
+   "pax": 5.79,
+   "crew": 1.27,
+   "n": 49
+  },
+  {
+   "era": "2021-2026",
+   "years": "2021-2024",
+   "ratio": 3.18,
+   "pax": 5.43,
+   "crew": 1.71,
+   "n": 37
+  }
+ ]
+}

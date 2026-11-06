@@ -1,0 +1,190 @@
+<header>
+  <p class="kicker">CDC Vessel Sanitation Program · 1993&ndash;2026</p>
+  <h1>Cruise passengers fall ill at <em>3.8 times</em> the crew rate on the same ship</h1>
+  <p class="standfirst">Crew live aboard for months. Passengers are there for a week. They drink the
+  same water, eat from the same galley and touch the same handrails. One group gets sick far more
+  often, and the gap holds in every subgroup this dataset is large enough to test.</p>
+  <p class="byline">Analysis by Albert Rafael Alonso &middot; 425 investigations,
+  <span id="n-ships">&mdash;</span> vessels
+  &middot; Source: <a href="https://www.cdc.gov/vessel-sanitation/cruise-ship-outbreaks/earlier-outbreaks.html">CDC Vessel Sanitation Program</a></p>
+</header>
+
+<div class="stats" id="stats"></div>
+<p class="note" id="statnote"></p>
+
+<section>
+  <h2>The gap survives every cut tested here</h2>
+  <p class="sub">Pooled attack rate for passengers and crew, inside each subgroup the data supports.
+  Every occupancy band, every era that has paired counts, both seasons. The ratio ranges from
+  2.7x to 4.6x and never approaches parity. Cruise line is not among the cuts: most operators
+  appear only a handful of times and 10 appear exactly once. Operator was not tested at all,
+  so this is a claim about the cuts below, not about every cut available.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i class="sw" style="background:var(--s2)"></i>Passengers</span>
+      <span><i class="sw" style="background:var(--s1)"></i>Crew</span>
+    </div>
+    <svg class="chart" id="c-sub" viewBox="0 0 760 430" role="img"
+      aria-label="Dumbbell chart showing passenger and crew attack rates within each occupancy band, era and season. Passengers are higher in all eleven subgroups."></svg>
+  </div>
+  <p class="note">Paired on the voyage, so ship, route, water supply and galley are held constant.
+  Wilcoxon signed-rank p = 1.2 &times; 10<sup>&minus;47</sup>, rank-biserial r = 0.96, median
+  per-voyage difference 4.11 percentage points. This is the finding the project rests on.</p>
+</section>
+
+<section>
+  <h2>Persistent across eras, but no significant trend either way</h2>
+  <p class="sub">Pooled rate per era. The crew rate fell to a low in 2016&ndash;2020 and rebounded.
+  Neither series shows a statistically detectable trend in either direction.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i class="sw" style="background:var(--s2)"></i>Passengers</span>
+      <span><i class="sw" style="background:var(--s1)"></i>Crew</span>
+    </div>
+    <svg class="chart" id="c-era" viewBox="0 0 760 360" role="img"
+      aria-label="Line chart of passenger and crew attack rates by era, showing a persistent gap and no clear trend in either series."></svg>
+  </div>
+  <p class="note"><b>Neither trend is statistically significant</b> across individual voyages:
+  crew &rho; = &minus;0.097, p = 0.092; passengers &rho; = +0.011, p = 0.850. An earlier version of
+  this analysis reported the crew trend as significant. That figure came from a sample cut at 2020,
+  which excluded the post-2020 rebound, and the cut was what produced the significance. It has been
+  withdrawn and replaced with the full-sample figures above.</p>
+</section>
+
+<section>
+  <h2>Most "repeat outbreaks" are one episode counted twice</h2>
+  <p class="sub">47 outbreaks began within thirty days of a previous one on the same vessel. 38 of
+  them began within two days of the previous voyage ending and one more overlapped it outright, with
+  a median gap of zero days. The most economical reading is that these are the following sailing of
+  the same itinerary, though the dataset carries no itinerary field to confirm it.</p>
+  <div class="card">
+    <svg class="chart" id="c-consec" viewBox="0 0 760 180" role="img"
+      aria-label="Bar showing that 38 of 47 sub-30-day repeat outbreaks begin within two days of the prior voyage ending, one overlaps the prior investigation, and 8 are separate episodes."></svg>
+  </div>
+  <p class="note">The economical explanation is a single outbreak spanning a turnaround, logged as
+  two investigations. That matters for anyone using VSP records to count outbreak frequency, because
+  the counts overstate the number of distinct episodes. I originally read this as evidence that ships
+  return to service too early. That conclusion is withdrawn.</p>
+</section>
+
+<section>
+  <h2>Clustering is real, but smaller than the obvious test suggests</h2>
+  <p class="sub">How many repeats you would expect if outbreaks landed on ships at random depends
+  entirely on what you let "at random" mean. Shuffling ship names across the whole 1993&ndash;2026
+  range lets a 1997 vessel take a 2020 date.</p>
+  <div class="card">
+    <div class="legend">
+      <span><i class="sw" style="background:var(--s2)"></i>Observed</span>
+      <span><i class="sw" style="background:var(--s1)"></i>Expected, shuffled within calendar year</span>
+    </div>
+    <svg class="chart" id="c-clus" viewBox="0 0 760 300" role="img"
+      aria-label="Grouped bar chart comparing observed repeat outbreaks against the number expected under a within-year permutation null."></svg>
+  </div>
+  <div id="clus-table" class="tablewrap"></div>
+  <p class="note">All three nulls stay significant at p &lt; 0.0005 across 2,000 permutations, but the
+  effect size shrinks as the null gets fairer. At the 90-day window it falls from 3.4x under an
+  unrestricted shuffle to 1.4x when the shuffle is restricted to within a calendar year. The chart
+  shows that most conservative comparison. The 90-day figures are the ones to quote, because the
+  independence assumption the test needs is weakest at 30 days, where most repeats are consecutive
+  sailings of the same loop.</p>
+</section>
+
+<section>
+  <h2>More passengers aboard does not mean a worse outbreak</h2>
+  <p class="sub">Every outbreak with published counts, by how many passengers were aboard. The
+  intuitive theory is that crowded megaships breed worse outbreaks. It is not supported.</p>
+  <div class="card">
+    <svg class="chart" id="c-scatter" viewBox="0 0 760 380" role="img"
+      aria-label="Scatter plot of passengers aboard each voyage against the passenger attack rate, showing no detectable relationship."></svg>
+  </div>
+  <p class="note">Spearman &rho; = &minus;0.061, p = 0.292 across 303 outbreaks. The least-squares
+  line slopes gently downward, but that slope is carried by a handful of very small expedition ships
+  with extreme rates and it does not survive a rank test. Voyage length does not predict severity
+  either (&rho; = +0.020, p = 0.726). Both null results are published rather than dropped.</p>
+</section>
+
+<section>
+  <h2>When outbreaks happen</h2>
+  <p class="sub">Investigated outbreaks by the month the voyage began, with the attack rate computed
+  separately over the smaller set of voyages that carry published counts.</p>
+  <div class="card">
+    <div class="toolbar">
+      <button class="t" id="m-count" aria-pressed="true">Outbreaks (all 425)</button>
+      <button class="t" id="m-rate" aria-pressed="false">Attack rate (303 with counts)</button>
+    </div>
+    <svg class="chart" id="c-month" viewBox="0 0 760 320" role="img"
+      aria-label="Bar chart of outbreaks by month of voyage start, concentrated December through March."></svg>
+  </div>
+  <p class="note">The two views use different populations, which is why they are on separate toggles
+  rather than the same axis. Outbreaks concentrate in winter, but so does Caribbean sailing volume
+  and occupancy, and this dataset has no voyage counts by month. The seasonal pattern cannot be
+  separated from seasonal exposure, so no inference is drawn from it here.</p>
+</section>
+
+<section>
+  <h2>What this does and does not establish</h2>
+  <div class="findings">
+    <div class="f">
+      <h3>Established</h3>
+      <p>Passengers fall ill at roughly four times the crew rate on the same voyages, in every
+      subgroup large enough to test, with a very large effect size. That is the one result here
+      that survives the paired signed-rank test and all eleven subgroup cuts.</p>
+    </div>
+    <div class="f">
+      <h3>Not established</h3>
+      <p>Any trend over time, in either direction. Across individual voyages the passenger rate
+      gives &rho; = +0.011, p = 0.850, which is not evidence of stability but an absence of
+      evidence either way. Also not established: why the gap exists. This dataset carries no
+      protocol, immunity or demographic variable. Protocol
+      differences, acquired immunity from months of exposure, a younger crew population, and crew
+      under-reporting are all live explanations, and nothing here ranks them.</p>
+    </div>
+    <div class="f">
+      <h3>Withdrawn</h3>
+      <p>That crew outcomes improved while passenger outcomes did not, which rested on a truncated
+      sample. And that vessels return to service too early, which rested on repeat outbreaks that
+      turn out to be consecutive sailings.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The data</h2>
+  <div class="card">
+    <div class="toolbar">
+      <button class="t" id="t-sub" aria-pressed="true">By subgroup</button>
+      <button class="t" id="t-era" aria-pressed="false">By era</button>
+      <button class="t" id="t-month" aria-pressed="false">By month</button>
+      <button class="t" id="t-clus" aria-pressed="false">Repeat outbreaks</button>
+    </div>
+    <div id="tables" class="tablewrap"></div>
+  </div>
+</section>
+
+<footer>
+  <h3>Method and limitations</h3>
+  <ul>
+    <li><b>428 investigations were transcribed; 425 are analysed.</b> Three carry month-only sailing
+      dates in the CDC source and cannot be placed on a timeline. Nothing was estimated or imputed.</li>
+    <li><b>Rates come from the 303 records carrying both passenger and crew counts</b>, spanning 2004
+      to 2024. CDC publishes counts only for closed reporting years. The longer 1993&ndash;2026 span
+      applies to outbreak frequency only.</li>
+    <li><b>Crew under-reporting is one of four live explanations</b> for the gap, alongside protocol,
+      acquired immunity and age mix. Crew have a financial incentive not to report illness that takes
+      them off paid duty. This data cannot separate them.</li>
+    <li>CDC investigates once reported illness reaches 3% of passengers or crew, so every rate here is
+      conditional on an outbreak being investigated. This is not a rate across all cruises.</li>
+    <li>Outbreak counts by cruise line track fleet size and voyage volume. They are not a safety
+      ranking.</li>
+    <li>Thirteen records carry a CDC percentage that disagrees with CDC's own published counts, seven on the passenger figure and six on the crew figure, and four
+      carry unusable voyage lengths. All are flagged in the dataset rather than silently corrected.</li>
+    <li>Records for 2019&ndash;2022 came from a public mirror of the CDC page because the CDC archive
+      URL was unreachable at collection time. All source pages were read by model-mediated text
+      extraction rather than direct HTML parsing.</li>
+  </ul>
+  <h3>Source</h3>
+  <p><a href="https://www.cdc.gov/vessel-sanitation/cruise-ship-outbreaks/earlier-outbreaks.html">CDC
+  Vessel Sanitation Program outbreak investigations</a>. VSP has jurisdiction over every cruise ship
+  carrying 13 or more passengers that calls on a US port.</p>
+</footer>
+</div>

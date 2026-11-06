@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who Gets Sick on Cruise Ships</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface-1:#fcfcfb; --plane:#f9f9f7;
+  --ink-1:#0b0b0b; --ink-2:#52514e; --ink-3:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#7a776f;
+  --s1-soft:rgba(42,120,214,0.14); --s2-soft:rgba(235,104,52,0.14);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --surface-1:#1a1a19; --plane:#0d0d0d;
+    --ink-1:#f0efec; --ink-2:#c3c2b7; --ink-3:#898781;
+    --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#908d85;
+    --s1-soft:rgba(57,135,229,0.18); --s2-soft:rgba(217,89,38,0.18);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --surface-1:#1a1a19; --plane:#0d0d0d;
+  --ink-1:#f0efec; --ink-2:#c3c2b7; --ink-3:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#908d85;
+  --s1-soft:rgba(57,135,229,0.18); --s2-soft:rgba(217,89,38,0.18);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--plane); color:var(--ink-1);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 72px}
+header{padding:56px 0 8px}
+.kicker{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin:0 0 14px}
+h1{font-size:clamp(28px,5.2vw,46px);line-height:1.1;margin:0 0 16px;letter-spacing:-0.02em;font-weight:700}
+h1 em{font-style:normal;color:var(--s2)}
+.standfirst{font-size:clamp(16px,2.2vw,18px);color:var(--ink-2);margin:0;max-width:62ch}
+.byline{margin-top:20px;font-size:13px;color:var(--ink-3)}
+.byline a{color:var(--ink-2)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--ring);border:1px solid var(--ring);border-radius:12px;overflow:hidden;margin:40px 0 8px}
+.stat{background:var(--surface-1);padding:20px 18px}
+.stat .v{font-size:clamp(24px,3.6vw,34px);font-weight:700;letter-spacing:-0.02em;line-height:1.1}
+.stat .v.b{color:var(--s1)} .stat .v.o{color:var(--s2)}
+.stat .l{font-size:12px;color:var(--ink-3);margin-top:6px;line-height:1.35}
+
+section{margin:56px 0 0}
+h2{font-size:clamp(19px,2.8vw,24px);margin:0 0 8px;letter-spacing:-0.01em;font-weight:650}
+.sub{color:var(--ink-2);margin:0 0 22px;max-width:68ch;font-size:15px}
+.card{background:var(--surface-1);border:1px solid var(--ring);border-radius:12px;padding:22px 20px 16px}
+.chart{width:100%;overflow:visible;display:block}
+.note{font-size:13px;color:var(--ink-3);margin:14px 2px 0;max-width:72ch}
+
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin:0 0 16px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:11px;height:11px;border-radius:3px;flex:none}
+
+.grid-line{stroke:var(--grid);stroke-width:1}
+.axis-line{stroke:var(--axis);stroke-width:1}
+.tick{fill:var(--ink-3);font-size:11.5px;font-variant-numeric:tabular-nums}
+.alab{fill:var(--ink-3);font-size:11.5px}
+.dlab{font-size:12.5px;font-weight:650}
+
+.tt{position:fixed;pointer-events:none;opacity:0;transition:opacity .09s;z-index:50;
+  background:var(--surface-1);border:1px solid var(--ring);border-radius:9px;
+  padding:9px 11px;font-size:12.5px;color:var(--ink-1);
+  box-shadow:0 6px 22px rgba(0,0,0,.14);max-width:230px;line-height:1.45}
+.tt b{font-weight:650}
+.tt .r{display:flex;justify-content:space-between;gap:14px;font-variant-numeric:tabular-nums}
+.tt .r i{font-style:normal;color:var(--ink-3)}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+button.t{font:inherit;font-size:13px;padding:7px 13px;border-radius:999px;cursor:pointer;
+  background:var(--surface-1);color:var(--ink-2);border:1px solid var(--ring)}
+button.t[aria-pressed="true"]{background:var(--ink-1);color:var(--surface-1);border-color:var(--ink-1)}
+#tables,.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:340px;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.hidden{display:none}
+
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:24px}
+.f{background:var(--surface-1);border:1px solid var(--ring);border-radius:12px;padding:20px}
+.f h3{margin:0 0 8px;font-size:15px;font-weight:650}
+.f p{margin:0;font-size:14px;color:var(--ink-2)}
+.f .n{font-size:13px;color:var(--ink-3);margin-top:10px}
+
+footer{margin-top:64px;padding-top:28px;border-top:1px solid var(--grid);font-size:13px;color:var(--ink-3)}
+footer h3{font-size:13px;color:var(--ink-2);margin:0 0 10px;font-weight:650}
+footer ul{margin:0 0 22px;padding-left:18px} footer li{margin-bottom:7px;max-width:76ch}
+footer a{color:var(--ink-2)}
+@media (max-width:600px){
+  header{padding-top:36px} section{margin-top:40px} .card{padding:16px 12px 12px}
+  th,td{padding:7px 8px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<div class="tt" id="tt"></div>
+<div class="wrap">
